@@ -25,7 +25,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-        AccountPolicy.cpp \
         UserModel.cpp \
         main.cpp \
         mainwindow.cpp
@@ -34,12 +33,17 @@ HEADERS += \
         Account.h \
         AccountModel.h \
         AccountPolicy.h \
+        AccountProxy.h \
+        CardModel.h \
+        CardProxy.h \
         CreditAccount.h \
         DebitAccount.h \
         IAccount.h \
+        ICard.h \
         ITransaction.h \
         IUser.h \
         SavingsAccount.h \
+        Storage.h \
         Transaction.h \
         UserModel.h \
         UserProxy.h \
