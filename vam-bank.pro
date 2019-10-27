@@ -45,6 +45,7 @@ HEADERS += \
         SavingsAccount.h \
         Storage.h \
         Transaction.h \
+        TransactionQueue.h \
         UserModel.h \
         UserProxy.h \
         mainwindow.h
