@@ -20,6 +20,7 @@ public:
     void setLastName(const string&);
     void setPassword(const string&);
     void setLogin(const string&);
-    //TODO add and remove accounts
+    void addAccount(const IAccount&) const;
+    void removeAccount(const size_t id);
 
 };
