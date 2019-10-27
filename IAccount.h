@@ -6,6 +6,9 @@
 class ICard;
 class ITransaction;
 
+/**
+ * @brief Interface for bank account
+ */
 class IAccount
 {
 protected:
@@ -15,15 +18,15 @@ protected:
     virtual void acceptTransfer(int amount) = 0;
 public:
     virtual ~IAccount() = 0;
-    virtual void transfer(IAccount& acc) = 0;
+    virtual void transfer(IAccount& acc, int amount) = 0;
     virtual int balance() const = 0;
     virtual size_t id() const = 0;
     virtual bool isPaymentAccount() const = 0;
     virtual void addCard(ICard & card) = 0;
-    virtual ICard* getCard(const std::array<unsigned char, 16> & cardNum) = 0;
+    virtual ICard* getCard(const std::array<unsigned char, 16> & cardNum) const = 0;
     virtual void removeCard(const std::array<unsigned char, 16> & cardNum) = 0;
-    virtual const std::vector<ICard*>& cards()=0;
-    virtual const std::vector<ITransaction*>& transactions()=0;
+    virtual const std::vector<ICard*>& cards() = 0;
+    virtual const std::vector<const ITransaction*>& transactions() const = 0;
 };
 
 template <typename Policy>

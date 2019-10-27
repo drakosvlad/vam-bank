@@ -42,6 +42,7 @@ HEADERS += \
         ICard.h \
         ITransaction.h \
         IUser.h \
+        QueueProcessor.h \
         SavingsAccount.h \
         Storage.h \
         Transaction.h \

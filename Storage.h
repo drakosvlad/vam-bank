@@ -1,7 +1,7 @@
 #include <vector>
-#include "UserModel.h"
-#include "AccountModel.h"
-#include "TransactionModel.h"
+#include "IUser.h"
+#include "IAccount.h"
+#include "ITransaction.h"
 
 /**
  * Singleton class that provides a global storage for all bank data
@@ -11,23 +11,26 @@ class Storage
 private:
   Storage() {  }
 
-  std::vector<UserModel> _users;
-  std::vector<AccountModel> _accounts;
-  std::vector<CardModel> _cards;
-  std::vector<TransactionModel> _transactions;
+  std::vector<IUser*> _users;
+  std::vector<IAccount*> _accounts;
+  std::vector<ICard*> _cards;
+  std::vector<ITransaction*> _transactions;
 
   Storage* _instance = nullptr;
 public:
   Storage& getInstance();
+  ~Storage();
+  Storage(const Storage &) = delete;
+  Storage& operator=(const Storage &) = delete;
 
   IUser& getUser(const std::string login);
   IAccount& getAccount(const size_t id);
   ICard& getCard(const std::array<unsigned char, 16> number);
   
-  const IUser** getUsers();
-  const IAccount** getAccounts();
-  const ICard** getCards();
-  const ITransaction** getTransactions();
+  const std::vector<IUser*> getUsers();
+  const std::vector<IAccount*> getAccounts();
+  const std::vector<ICard*> getCards();
+  const std::vector<ITransaction*> getTransactions();
 
   void addUser(IUser& user);
   void addAccount(IAccount& account);

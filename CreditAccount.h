@@ -2,5 +2,5 @@
 #include "AccountModel.h"
 #include "AccountPolicy.h"
 
-typedef AccountPolicy<5, 0, 0, false> SavingsAccountPolicy;
-typedef AccountModel<SavingsAccountPolicy> SavingsAccount;
+typedef AccountPolicy<5, 0, 0, false> CreditAccountPolicy;
+typedef AccountModel<CreditAccountPolicy> CreditAccount;

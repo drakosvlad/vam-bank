@@ -1,6 +1,9 @@
 #pragma once
 #include "ICard.h"
 
+/**
+ * @brief Class representing bank card
+ */
 class CardModel : public ICard
 {
 private:
@@ -15,12 +18,12 @@ public:
         const DueDate& _dueDate,
         const IAccount& _bindedAccount
     );
-    ~CardModel();
+    ~CardModel() override;
     CardModel(const CardModel&);
     CardModel& operator=(const CardModel&)=delete;
-    void changePin(const std::string&);
-    const std::array<unsigned char, 4>& verifyPin() const;
-    const std::array<unsigned char, 16>& getCardNumber() const;
-    const IAccount& getAccount() const;
-    const DueDate& getDueDate() const;
+    void changePin(const std::string&) override;
+    const std::array<unsigned char, 4>& verifyPin() const override;
+    const std::array<unsigned char, 16>& getCardNumber() const override;
+    const IAccount& getAccount() const override;
+    const DueDate& getDueDate() const override;
 };

@@ -3,6 +3,9 @@
 #include <ostream>
 #include "IAccount.h"
 
+/**
+ * Class representing bank account
+ */
 template <typename Policy>
 class AccountModel : public IAccount 
 {
@@ -12,7 +15,7 @@ private:
     std::vector<ICard*> _cards;
 
 protected:
-    void acceptTransfer(int amount);
+    void acceptTransfer(int amount) override;
 
 public:
     class TransferError;
@@ -22,14 +25,15 @@ public:
     AccountModel(const AccountModel & am);
     AccountModel& operator=(const AccountModel & am);
 
-    void transfer(IAccount& acc, int amount);
-    int balance() const { return this->_balance; }
-    size_t id() const { return this->_id; }
-    bool isPaymentAccount() const { return Policy::_isPaymentAccount; }
-    void addCard(ICard & card);
-    ICard* getCard(const std::array<unsigned char, 16> & cardNum);
-    void removeCard(const std::array<unsigned char, 16> & cardNum);
-    const std::vector<ICard*>& cards();
+    void transfer(IAccount& acc, int amount) override;
+    int balance() const override { return this->_balance; }
+    size_t id() const override { return this->_id; }
+    bool isPaymentAccount() const override { return Policy::_isPaymentAccount; }
+    void addCard(ICard & card) override;
+    ICard* getCard(const std::array<unsigned char, 16> & cardNum) const override;
+    void removeCard(const std::array<unsigned char, 16> & cardNum) override;
+    const std::vector<ICard*>& cards() override;
+    const std::vector<const ITransaction*>& transactions() const override;
 };
 
 template <typename Policy>

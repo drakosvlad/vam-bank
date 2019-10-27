@@ -1,5 +1,8 @@
 #pragma once
 
+/**
+ * @brief Account fee policy
+ */
 template<int AcceptFee, int TransferFee, int PaymentFee, bool IsPaymentAccount>
 struct AccountPolicy
 {

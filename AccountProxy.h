@@ -1,5 +1,8 @@
 #include "AccountModel.h"
 
+/**
+ * @brief Account proxy class
+ */
 template<typename Policy>
 class AccountProxy : public IAccount {
 private:
