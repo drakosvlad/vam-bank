@@ -15,8 +15,9 @@ public:
     CardProxy& operator=(CardProxy & proxy) = delete;
 
     void changePin(const std::string&) override;
-    const std::array<unsigned char,4>& verifyPin() const override;
-    const std::array<unsigned char,16>& getCardNumber() const override;
+    bool verifyPin(const std::array<unsigned char,4> &) const override;
+    const std::array<unsigned char,16> getCardNumber() const override;
+    const std::array<unsigned char,7> getCardId() const override;
     const IAccount& getAccount() const override;
     const DueDate& getDueDate() const override;
 };

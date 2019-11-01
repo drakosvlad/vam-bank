@@ -7,6 +7,7 @@
  */
 class ITransaction
 {
+public:
     virtual ~ITransaction()=0;
     virtual const IAccount* getSender() const = 0;
     virtual const IAccount* getReciever() const = 0;

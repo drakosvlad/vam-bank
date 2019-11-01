@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,12 +25,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        TerminalConnector.cpp \
         UserModel.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
-        Account.h \
         AccountModel.h \
         AccountPolicy.h \
         AccountProxy.h \
@@ -45,6 +45,8 @@ HEADERS += \
         QueueProcessor.h \
         SavingsAccount.h \
         Storage.h \
+        StringUtils.h \
+        TerminalConnector.h \
         Transaction.h \
         TransactionQueue.h \
         UserModel.h \
