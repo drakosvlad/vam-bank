@@ -28,6 +28,7 @@ SOURCES += \
         TerminalConnector.cpp \
         UserModel.cpp \
         main.cpp \
+        mainmenuview.cpp \
         mainwindow.cpp
 
 HEADERS += \
@@ -51,12 +52,16 @@ HEADERS += \
         TransactionQueue.h \
         UserModel.h \
         UserProxy.h \
+        mainmenuview.h \
         mainwindow.h
 
 FORMS += \
-        mainwindow.ui
+        mainmenuview.ui \
+        mainwindow.ui \
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES +=
