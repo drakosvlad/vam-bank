@@ -4,7 +4,7 @@
 /**
  * @brief Class that asynchronously processes transactions queue
  */
-class QueueProcessor : public QThread
+class TransactionQueueProcessor : public QThread
 {
     Q_OBJECT
 private:

@@ -70,11 +70,11 @@ const QString TerminalConnector::processCreateTransactionCommand(const QString &
 {
     QStringList commandParts(command.split('/'));
 
-    if (commandParts.length() != 4 || commandParts[1].length() != 7 || commandParts[3].length() != 4)
+    if (commandParts.length() != 4 || commandParts[1].length() != 14 || commandParts[3].length() != 4)
         return MALFORMED_MESSAGE;
 
     // TODO Refactor this code into template
-    const auto cardId(qStringToStdArray<7>(commandParts[1]));
+    const auto cardId(hexQStringToStdArray<7>(commandParts[1]));
     const int amount = commandParts[2].toInt();
     const auto cardPin(qStringToStdArray<4>(commandParts[4]));
 

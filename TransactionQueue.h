@@ -1,5 +1,6 @@
 #pragma once
 #include <deque>
+#include <QObject>
 #include <QSemaphore>
 #include "IAccount.h"
 
@@ -9,29 +10,37 @@ enum TransactionStatus {
     Failed
 };
 
+struct TransactionStub {
+    IAccount& _from;
+    IAccount& _to;
+    int _amount;
+    size_t _transactionId;
+};
+
 /**
- * @brief Singleton class that represents a thread-safe transaction queue
+ * @brief Represents a thread-safe transaction queue
+ *
+ * Implements a Singleton pattern
  */
-class TransactionQueue
+class TransactionQueue : public QObject
 {
+    Q_OBJECT
 private:
     TransactionQueue() {  }
-
     QSemaphore _transactionQueueSemaphore;
-    QSemaphore _failureSetSemaphore;
-    /**
-     * @brief Queue containing source and target account ids and amount
-     */
-    std::deque<std::pair<std::pair<size_t, size_t>, int>> _queue;
+    std::deque<const TransactionStub> _queue;
 
-    TransactionQueue* _instance = nullptr;
+    static TransactionQueue* _instance;
 public:
     static TransactionQueue& getInstance();
     ~TransactionQueue();
     TransactionQueue(const TransactionQueue &) = delete;
     TransactionQueue& operator=(const TransactionQueue &) = delete;
 
-    void addTransaction(const size_t fromId, const size_t toId, const int amount);
-    std::pair<std::pair<size_t, size_t>, int> removeTransaction();
+    bool transactionAvailable();
+    const TransactionStub removeTransaction();
     TransactionStatus getTransactionStatus(size_t transactionId);
+
+public slots:
+    void receiveTransaction(IAccount& fromAccount, IAccount& toAccount, int amount, size_t transactionId);
 };

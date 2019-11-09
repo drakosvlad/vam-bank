@@ -26,6 +26,8 @@ CONFIG += c++11
 
 SOURCES += \
         TerminalConnector.cpp \
+        TransactionModel.cpp \
+        TransactionQueue.cpp \
         UserModel.cpp \
         main.cpp \
         mainmenuview.cpp \
@@ -43,13 +45,13 @@ HEADERS += \
         ICard.h \
         ITransaction.h \
         IUser.h \
-        QueueProcessor.h \
         SavingsAccount.h \
         Storage.h \
         StringUtils.h \
         TerminalConnector.h \
-        Transaction.h \
+        TransactionModel.h \
         TransactionQueue.h \
+        TransactionQueueProcessor.h \
         UserModel.h \
         UserProxy.h \
         mainmenuview.h \
