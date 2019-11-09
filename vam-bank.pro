@@ -25,6 +25,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        CardModel.cpp \
+        CardProxy.cpp \
         TerminalConnector.cpp \
         TransactionModel.cpp \
         TransactionQueue.cpp \
