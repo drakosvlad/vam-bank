@@ -35,10 +35,10 @@ public:
     const std::vector<ICard*> getCards();
     const std::vector<ITransaction*> getTransactions();
 
-    void addUser(IUser& user);
-    void addAccount(IAccount& account);
-    void addCard(ICard& card);
-    void addTransaction(ITransaction& transaction);
+    void addUser(IUser* user);
+    void addAccount(IAccount* account);
+    void addCard(ICard* card);
+    void addTransaction(ITransaction* transaction);
 
     void removeUser(const std::string login);
     void removeAccount(const size_t id);

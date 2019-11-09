@@ -18,8 +18,6 @@ protected:
     void acceptTransfer(int amount) override;
 
 public:
-    class TransferError;
-
     AccountModel(int balance, size_t id);
     ~AccountModel(){  }
     AccountModel(const AccountModel & am);
@@ -80,27 +78,3 @@ void AccountModel<Policy>::addCard(ICard & card)
     this->_cards.push_back(&card);
 }
 
-/**
- * Class for handling Transfer errors
- */
-template <typename Policy>
-class AccountModel<Policy>::TransferError
-{
-private:
-    const char * _message;
-public:
-    TransferError(const char * message) : _message(message) {  }
-    TransferError(const TransferError & err) : _message(err._message) {  }
-    TransferError& operator=(const TransferError & err)
-    {
-        this->_message = err.message();
-    }
-
-    const char * message() { return _message; }
-};
-
-template <typename Policy>
-std::ostream& operator<<(std::ostream & out, const typename AccountModel<Policy>::TransferError error)
-{
-    out << "TRANSFER ERROR: " << error.message() << std::endl;
-}

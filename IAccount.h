@@ -2,6 +2,7 @@
 #include <array>
 #include <ostream>
 #include <vector>
+#include <QDebug>
 
 class ICard;
 class ITransaction;
@@ -30,7 +31,40 @@ public:
 };
 
 template <typename Policy>
-std::ostream& operator<<(std::ostream & out, const IAccount & account)
+std::ostream& operator<<(std::ostream& out, const IAccount& account)
 {
     out << "Account #" << account.id() << " with the balance of UAH" << account.balance();
+    return out;
 }
+
+/**
+ * Class for handling Transfer errors
+ */
+class TransferError
+{
+private:
+    const char * _message;
+public:
+    TransferError(const char * message) : _message(message) {  }
+    TransferError(const TransferError & err) : _message(err._message) {  }
+    TransferError& operator=(const TransferError & err)
+    {
+        this->_message = err.message();
+        return *this;
+    }
+
+    const char * message() const { return _message; }
+};
+
+std::ostream& operator<<(std::ostream& out, const TransferError& error)
+{
+    out << "TRANSFER ERROR: " << error.message() << std::endl;
+    return out;
+}
+
+QDebug operator<<(QDebug debug, const TransferError& error)
+{
+    debug << error.message();
+    return debug;
+}
+

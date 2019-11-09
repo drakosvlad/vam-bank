@@ -27,7 +27,7 @@ class TransactionQueue : public QObject
     Q_OBJECT
 private:
     TransactionQueue() {  }
-    QSemaphore _transactionQueueSemaphore;
+    QSemaphore _semaphore;
     std::deque<const TransactionStub> _queue;
 
     static TransactionQueue* _instance;

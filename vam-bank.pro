@@ -28,6 +28,7 @@ SOURCES += \
         TerminalConnector.cpp \
         TransactionModel.cpp \
         TransactionQueue.cpp \
+        TransactionQueueProcessor.cpp \
         UserModel.cpp \
         main.cpp \
         mainmenuview.cpp \
