@@ -18,12 +18,14 @@ public:
     const std::string& getLastName() const override;
     const std::string& getPassword() const override;
     const std::string& getLogin() const override;
+    const IAccount& getAccount(const size_t) const override;
 
     void setFirstName(const std::string &) override;
     void setLastName(const std::string &) override;
     void setPassword(const std::string &) override;
     void setLogin(const std::string &) override;
 
-    void addAccount(const IAccount &) override;
-    void removeAccount(const size_t id) override;
+    void addAccount(IAccount*) override;
+    void removeAccount(const IAccount&) override;
+    virtual const std::vector<IAccount*>& accounts() override;
 };

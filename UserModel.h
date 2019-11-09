@@ -10,14 +10,14 @@ class UserModel: public IUser
 {
 private:
     std::string _firstName,_lastName, _password, _login;
-    std::vector<IAccount> _accounts;
+    std::vector<IAccount*> _accounts;
 public:
     UserModel(
             const std::string& firstName,
             const std::string& lastName,
             const std::string& password,
             const std::string& login,
-            const IAccount* account
+            const std::vector<IAccount*> account
         );
     ~UserModel() override;
 
@@ -25,13 +25,17 @@ public:
     const std::string& getLastName() const override;
     const std::string& getPassword() const override;
     const std::string& getLogin() const override;
+    const IAccount* getAccount(const size_t) const override;
+    IAccount* getAccount(const size_t) override;
 
     void setFirstName(const std::string &) override;
     void setLastName(const std::string &) override;
     void setPassword(const std::string &) override;
     void setLogin(const std::string &) override;
 
-    void addAccount(const IAccount &) override;
-    IAccount& getAccount(const size_t) const override;
-    void removeAccount(const size_t id) override;
+    void verifyPassword(const std::string&) const override;
+    void addAccount(IAccount*) override;
+    void removeAccount(const IAccount&) override;
+    const std::vector<IAccount*>& accounts() override;
+
 };

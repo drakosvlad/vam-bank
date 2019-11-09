@@ -21,8 +21,9 @@ public:
     virtual void setPassword(const std::string&) = 0;
     virtual void setLogin(const std::string&) = 0;
 
-    virtual void addAccount(const IAccount&) = 0;
-    virtual IAccount& getAccount(const size_t) const = 0;
-    virtual void removeAccount(const size_t) = 0;
-    virtual const std::vector<IAccount*> & accounts() = 0;
+    virtual void addAccount(IAccount*) = 0;
+    virtual const IAccount* getAccount(const size_t) const = 0;
+    virtual IAccount* getAccount(const size_t) = 0;
+    virtual void removeAccount(const IAccount&) = 0;
+    virtual const std::vector<IAccount*>& accounts() = 0;
 };
