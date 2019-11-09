@@ -8,19 +8,21 @@ class AccountProxy : public IAccount {
 private:
     AccountModel<Policy>& _model;
 protected:
-    void acceptTransfer(int amount);
+    void acceptTransfer(const int amount);
 public:
     AccountProxy(AccountModel<Policy> & model) : _model(model) {  }
     ~AccountProxy() {  }
     AccountProxy(AccountProxy & proxy) : _model(proxy._model) {  }
     AccountProxy& operator=(AccountProxy & proxy) = delete;
 
-    void transfer(IAccount& acc);
-    int balance() const;
-    size_t id() const;
-    bool isPaymentAccount() const;
-    void addCard(ICard & card);
-    ICard* getCard(const std::array<unsigned char, 16> & cardNum);
-    void removeCard(const std::array<unsigned char, 16> & cardNum);
-    const std::vector<ICard*>& cards();
+    void transfer(IAccount& acc, const int amount) override;
+    int balance() const override { return this->_balance; }
+    size_t id() const override { return this->_id; }
+    bool isPaymentAccount() const override { return Policy::_isPaymentAccount; }
+    void addCard(ICard & card) override;
+    ICard* getCard(const std::array<unsigned char, 16> & cardNum) const override;
+    void removeCard(const std::array<unsigned char, 16> & cardNum) override;
+    const std::vector<ICard*>& cards() override;
+    const std::vector<const ITransaction*>& transactions() const override;
 };
+

@@ -15,15 +15,15 @@ private:
     std::vector<ICard*> _cards;
 
 protected:
-    void acceptTransfer(int amount) override;
+    void acceptTransfer(const int amount) override;
 
 public:
-    AccountModel(int balance, size_t id);
+    AccountModel(const int balance, size_t id);
     ~AccountModel(){  }
     AccountModel(const AccountModel & am);
     AccountModel& operator=(const AccountModel & am);
 
-    void transfer(IAccount& acc, int amount) override;
+    void transfer(IAccount& acc, const int amount) override;
     int balance() const override { return this->_balance; }
     size_t id() const override { return this->_id; }
     bool isPaymentAccount() const override { return Policy::_isPaymentAccount; }
@@ -50,14 +50,14 @@ AccountModel<Policy>& AccountModel<Policy>::operator=(const AccountModel & am)
 }
 
 template <typename Policy>
-void AccountModel<Policy>::acceptTransfer(int amount)
+void AccountModel<Policy>::acceptTransfer(const int amount)
 {
     int actualAmount = amount - Policy::acceptFee(amount);
     this->_balance += actualAmount;
 }
 
 template <typename Policy>
-void AccountModel<Policy>::transfer(IAccount& acc, int amount)
+void AccountModel<Policy>::transfer(IAccount& acc, const int amount)
 {
     if (amount <= 0)
         throw TransferError("Invalid transfer amount");
