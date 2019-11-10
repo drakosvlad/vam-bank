@@ -22,13 +22,14 @@ void signinview::on_signIn_B_clicked()
     const std::string login = ui->username_TB->text().toLocal8Bit().constData();
     const std::string password =  ui->password_TB->text().toLocal8Bit().constData();
     user = Storage::getInstance().getUser(login);
-    if(isCorrectCredentials(login,password))
+    if (user != nullptr && isCorrectCredentials(login,password))
     {
         QMessageBox::information(this, "Login", "Successful sign in for user ");
         acountList = new acountlistview(*this,*user,this);
         acountList->show();
         this->hide();
-    } else
+    }
+    else
     {
         QMessageBox::information(this, "Error", "User was not found");
         return;
@@ -38,12 +39,11 @@ void signinview::on_signIn_B_clicked()
 bool signinview::isCorrectCredentials(const std::string &username, const std::string &password)
 {
 
- if (user->getLogin().compare(username) != 0)
-     return false;
- if (user->getPassword().compare(password) != 0)
-     return false;
-
-   return true;
+    if (user->getLogin().compare(username) != 0)
+        return false;
+    if (user->getPassword().compare(password) != 0)
+        return false;
+    return true;
 }
 
 
