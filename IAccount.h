@@ -59,3 +59,5 @@ std::ostream& operator<<(std::ostream& out, const TransferError& error);
 
 QDebug operator<<(QDebug debug, const TransferError& error);
 
+Q_DECLARE_METATYPE(IAccount*);
+Q_DECLARE_METATYPE(size_t);
