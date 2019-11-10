@@ -22,8 +22,9 @@ MainMenuView::MainMenuView(acountlistview & acount, IAccount* account, QWidget *
     selectedAccount(account)
 {
     ui->setupUi(this);
-    ui->balance_label->setText(QString::number(selectedAccount->balance())+"UAH");
     ui->acoundId_label->setText(QString::number(selectedAccount->id()));
+
+    updateTransactions();
 }
 
 MainMenuView::~MainMenuView()
@@ -79,6 +80,20 @@ bool MainMenuView::isCorrectRecipientsCard(const std::string &cardNumber)
 }
 
 
+void MainMenuView::updateTransactions()
+{
+    ui->balance_label->setText(QString::number(selectedAccount->balance())+"UAH");
+    const std::vector<const ITransaction*> history =  selectedAccount->transactions();
+    ui->transactionList_List->clear();
+    for(std::vector<const ITransaction*>::const_iterator itor = history.begin(); itor != history.end(); ++itor)
+    {
+        ui->transactionList_List->addItem(QString("From:")+ (*itor)->getSender().getAccountName()+ " to: "+(*itor)->getReciever().getAccountName()
+                                          +", sum: "+  QString::number((*itor)->getAmount())
+                                          + QString(", status : ")+QString::number((*itor)->getSuccess()));
+
+    }
+
+}
 
 void MainMenuView::on_widthdraw_B_clicked()
 {
@@ -106,15 +121,5 @@ void MainMenuView::on_signOut_B_clicked()
 
 void MainMenuView::on_refreshButton_B_clicked()
 {
-    ui->balance_label->setText(QString::number(selectedAccount->balance())+"UAH");
-    const std::vector<const ITransaction*> history =  selectedAccount->transactions();
-
-    for(std::vector<const ITransaction*>::const_iterator itor = history.begin(); itor != history.end(); ++itor)
-    {
-        ui->transactionList_List->addItem(QString("From:")+ (*itor)->getSender().getAccountName()+ " to: "+(*itor)->getReciever().getAccountName()
-                                          + QString::number((*itor)->getAmount())
-                                          + QString("status : ")+QString::number((*itor)->getSuccess()));
-
-    }
-
+    updateTransactions();
 }

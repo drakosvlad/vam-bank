@@ -23,8 +23,8 @@ acountlistview::acountlistview(signinview & signIn,IUser & user, QWidget *parent
 
 void acountlistview::refreshAccountsList()
 {
-     std::vector<IAccount*> accounts = _user.accounts();
-
+    std::vector<IAccount*> accounts = _user.accounts();
+    ui->acountList_CB->clear();
     for (std::vector<IAccount*>::iterator itor = accounts.begin(); itor != accounts.end(); ++itor)
     {
         ui->acountList_CB->addItem((*itor)->getAccountName()+ ": " +  QString::number((*itor)->id()) + " - " + QString::number((*itor)->balance()/10) + "UAH");
@@ -58,22 +58,19 @@ void acountlistview::on_addAccount_B_clicked()
     {
         auto account = new DebitAccount(&_user,0, Storage::getInstance().getNextAccountId());
         _user.addAccount(account);
-        ui->acountList_CB->addItem(account->getAccountName()+ ": " +  QString::number(account->id()) + " - " + QString::number(account->balance()/10) + "UAH");
-
         QMessageBox::information(this, "202", "Successfully added ");
     }
     else  if (type.compare("Credit")==0)
     {
         auto account = new CreditAccount(&_user,100000, Storage::getInstance().getNextAccountId());
          _user.addAccount(account);
-         ui->acountList_CB->addItem(account->getAccountName()+ ": " +  QString::number(account->id()) + " - " + QString::number(account->balance()/10) + "UAH");
          QMessageBox::information(this, "202", "Successfully added ");
     }
     else if (type.compare("Saving")==0)
     {
         auto account = new SavingsAccount(&_user, 0 , Storage::getInstance().getNextAccountId());
          _user.addAccount(account);
-         ui->acountList_CB->addItem(account->getAccountName()+ ": " +  QString::number(account->id()) + " - " + QString::number(account->balance()/10) + "UAH");
          QMessageBox::information(this, "202", "Successfully added ");
     }
+    refreshAccountsList();
 }

@@ -451,6 +451,12 @@ QPushButton:hover{
      <height>171</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QGroupBox {
+ border: 1px solid back;
+
+}</string>
+   </property>
    <property name="title">
     <string>Add account</string>
    </property>
