@@ -62,6 +62,9 @@ void AccountModel<Policy>::transfer(IAccount& acc, const int amount)
     if (amount <= 0)
         throw TransferError("Invalid transfer amount");
 
+    if (this->_id == acc.id()) // Transaction to the account itself is automatically accepted with no fees
+        return;
+
     int actualAmount = amount + (acc.isPaymentAccount() ?
                 Policy::transferFee(amount) :
                 Policy::paymentFee(amount));
