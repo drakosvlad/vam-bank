@@ -21,11 +21,9 @@ public:
     size_t id() const override;
     bool isPaymentAccount() const override;
     void addCard(ICard* card) override;
-    const ICard* getCard(const std::array<unsigned char, 16> & cardNum) const override;
-    ICard* getCard(const std::array<unsigned char, 16> & cardNum) override;
     ICard* getCard(const std::array<unsigned char, 7> & id) override;
     const ICard* getCard(const std::array<unsigned char, 7> & id) const override;
-    void removeCard(const std::array<unsigned char, 16> & cardNum) override;
+    void removeCard(const std::array<unsigned char, 7> & cardNum) override;
     const std::vector<ICard*> cards() const override;
     const std::vector<const ITransaction*> transactions() const override;
     void addTransaction(const ITransaction *) override;

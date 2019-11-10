@@ -48,21 +48,6 @@ IAccount* Storage::getAccount(const size_t id)
     return nullptr;
 }
 
-ICard* Storage::getCard(const std::array<unsigned char, 16> number)
-{
-    for (std::vector<UserProxy*>::iterator uItor = _users.begin(); uItor != _users.end(); uItor++)
-    {
-        std::vector<IAccount*> accounts = (*uItor)->accounts();
-        for (std::vector<IAccount*>::iterator aItor = accounts.begin(); aItor != accounts.end(); ++aItor)
-        {
-            auto card = (*aItor)->getCard(number);
-            if (card != nullptr)
-                return card;
-        }
-    }
-    return nullptr;
-}
-
 ICard* Storage::getCard(const std::array<unsigned char, 7> id)
 {
     for (std::vector<UserProxy*>::iterator uItor = _users.begin(); uItor != _users.end(); uItor++)

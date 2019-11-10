@@ -25,7 +25,6 @@ public:
 
     IUser* getUser(const std::string login);
     IAccount* getAccount(const size_t id);
-    ICard* getCard(const std::array<unsigned char, 16> number);
     ICard* getCard(const std::array<unsigned char, 7> id);
     const ITransaction* getTransaction(const size_t id);
 

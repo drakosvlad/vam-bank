@@ -23,11 +23,9 @@ public:
     virtual size_t id() const = 0;
     virtual bool isPaymentAccount() const = 0;
     virtual void addCard(ICard* card) = 0;
-    virtual ICard* getCard(const std::array<unsigned char, 16> & cardNum) = 0;
-    virtual const ICard* getCard(const std::array<unsigned char, 16> & cardNum) const = 0;
     virtual ICard* getCard(const std::array<unsigned char, 7> & id) = 0;
     virtual const ICard* getCard(const std::array<unsigned char, 7> & id) const = 0;
-    virtual void removeCard(const std::array<unsigned char, 16> & cardNum) = 0;
+    virtual void removeCard(const std::array<unsigned char, 7> & cardNum) = 0;
     virtual const std::vector<ICard*> cards() const = 0;
     virtual const std::vector<const ITransaction*> transactions() const = 0;
     virtual void addTransaction(const ITransaction *) = 0;

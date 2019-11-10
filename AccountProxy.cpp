@@ -44,19 +44,9 @@ void AccountProxy::addCard(ICard* card)
     Storage::getInstance().commitAccount(_model);
 }
 
-const ICard* AccountProxy::getCard(const std::array<unsigned char, 16> &cardNum) const
-{
-    return new CardProxy(*dynamic_cast<CardModel*>(_model->getCard(cardNum)));
-}
-
 const ICard* AccountProxy::getCard(const std::array<unsigned char, 7> &id) const
 {
     return new CardProxy(*dynamic_cast<CardModel*>(_model->getCard(id)));
-}
-
-ICard* AccountProxy::getCard(const std::array<unsigned char, 16> &cardNum)
-{
-    return new CardProxy(*dynamic_cast<CardModel*>(_model->getCard(cardNum)));
 }
 
 ICard* AccountProxy::getCard(const std::array<unsigned char, 7> &id)
@@ -64,7 +54,7 @@ ICard* AccountProxy::getCard(const std::array<unsigned char, 7> &id)
     return new CardProxy(*dynamic_cast<CardModel*>(_model->getCard(id)));
 }
 
-void AccountProxy::removeCard(const std::array<unsigned char, 16> &cardNum)
+void AccountProxy::removeCard(const std::array<unsigned char, 7> &cardNum)
 {
     _model->removeCard(cardNum);
     Storage::getInstance().commitAccount(_model);
