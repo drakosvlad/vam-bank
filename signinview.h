@@ -1,29 +1,22 @@
-/*#ifndef SIGNINVIEW_H
+#ifndef SIGNINVIEW_H
 #define SIGNINVIEW_H
 
-#include <QDialog>
+#include <QWidget>
 
 namespace Ui {
-class SignInVIew;
+class signinview;
 }
 
-class SignInVIew : public QDialog
+class signinview : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit SignInVIew(QWidget *parent = nullptr);
-    ~SignInVIew();
+    explicit signinview(QWidget *parent = nullptr);
+    ~signinview();
 
-
-private slots:
-    void on_pushButton_clicked();
-    void on_signIn_B_clicked();
-    void on_signUP_B_clicked();
 private:
-    Ui::SignInVIew *ui;
-    bool isCorrectCredentials(QString, QString );
+    Ui::signinview *ui;
 };
 
 #endif // SIGNINVIEW_H
-*/

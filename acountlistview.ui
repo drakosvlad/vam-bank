@@ -2,8 +2,8 @@
  <author/>
  <comment/>
  <exportmacro/>
- <class>signinview</class>
- <widget class="QWidget" name="signinview">
+ <class>acountlistview</class>
+ <widget class="QWidget" name="acountlistview">
   <property name="geometry">
    <rect>
     <x>0</x>
