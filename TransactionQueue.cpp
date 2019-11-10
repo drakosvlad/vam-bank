@@ -18,25 +18,25 @@ TransactionQueue::~TransactionQueue()
 
 const TransactionStub TransactionQueue::removeTransaction()
 {
-    _semaphore.acquire();
+    _semaphore.lock();
     TransactionStub stub = _queue[0];
     _queue.pop_front();
-    _semaphore.release();
+    _semaphore.unlock();
     return stub;
 }
 
-void TransactionQueue::receiveTransaction(IAccount& fromAccount, IAccount& toAccount, int amount, size_t transactionId)
+void TransactionQueue::receiveTransaction(IAccount* fromAccount, IAccount* toAccount, int amount, unsigned int transactionId)
 {
     TransactionStub stub {
-        fromAccount,
-        toAccount,
+        *fromAccount,
+        *toAccount,
         amount,
         transactionId
     };
 
-    _semaphore.acquire();
+    _semaphore.lock();
     _queue.push_back(stub);
-    _semaphore.release();
+    _semaphore.unlock();
 }
 
 TransactionStatus TransactionQueue::getTransactionStatus(size_t transactionId)
@@ -49,8 +49,6 @@ TransactionStatus TransactionQueue::getTransactionStatus(size_t transactionId)
 
 bool TransactionQueue::transactionAvailable()
 {
-    _semaphore.acquire();
     size_t size = _queue.size();
-    _semaphore.release();
     return size > 0;
 }

@@ -67,6 +67,7 @@ void AccountModel<Policy>::transfer(IAccount& acc, const int amount)
         throw TransferError("Dayte denyak");
 
     this->_balance -= actualAmount;
+    acc.acceptTransfer(amount);
 }
 
 template <typename Policy>

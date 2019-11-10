@@ -22,7 +22,8 @@ void TransactionQueueProcessor::run()
     {
         if (!TransactionQueue::getInstance().transactionAvailable())
         {
-            sleep(20);
+            //qDebug() << "No transactions";
+            msleep(20);
             continue;
         }
 
@@ -48,5 +49,6 @@ void TransactionQueueProcessor::run()
 
         transaction._from.addTransaction(transactionModel);
         transaction._to.addTransaction(transactionModel);
+        qDebug() << "Success";
     }
 }
