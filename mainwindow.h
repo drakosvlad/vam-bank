@@ -2,8 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "signinview.h"
 #include "mainmenuview.h"
+#include "signinview.h"
 namespace Ui {
 class MainWindow;
 }
@@ -21,8 +21,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    //SignInVIew *signInView;
-    MainMenuView *mainMenuView;
+    signinview *signInView;
 };
 
 #endif // MAINWINDOW_H

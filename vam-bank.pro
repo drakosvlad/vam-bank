@@ -39,9 +39,11 @@ SOURCES += \
         TransactionQueueProcessor.cpp \
         UserModel.cpp \
         UserProxy.cpp \
+        acountlistview.cpp \
         main.cpp \
         mainmenuview.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        signinview.cpp
 
 HEADERS += \
         AccountModel.h \
@@ -64,12 +66,16 @@ HEADERS += \
         TransactionQueueProcessor.h \
         UserModel.h \
         UserProxy.h \
+        acountlistview.h \
         mainmenuview.h \
-        mainwindow.h
+        mainwindow.h \
+        signinview.h
 
 FORMS += \
+        acountlistview.ui \
         mainmenuview.ui \
         mainwindow.ui \
+        signinview.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
