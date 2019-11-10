@@ -8,12 +8,16 @@
 #include <QMessageBox>
 #include <QLineEdit>
 
+#include "TransactionQueue.h"
+#include "IAccount.h"
+
 using namespace std;
 
 
-MainMenuView::MainMenuView(acountlistview & acount,QWidget *parent) :
+MainMenuView::MainMenuView(acountlistview & acount, IAccount* account, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::MainMenuView),acountList(acount)
+    ui(new Ui::MainMenuView),acountList(acount),
+    selectedAccount(account)
 {
     //TODO: change to db name and surname;
     ui->setupUi(this);
@@ -52,6 +56,8 @@ void MainMenuView::on_transfer_B_clicked()
     }
 
     //TODO: connection to DB, check is current`s card money is enough and transfer
+    //TransactionQueue::getInstance().receiveTransaction()
+
      ui->recipient_TB->setText("");
      ui->TrnsfSum_TB->setText("");
       QMessageBox::information(this, "Succesffull", "Operation succesfull!");
