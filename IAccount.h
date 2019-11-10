@@ -3,7 +3,7 @@
 #include <ostream>
 #include <vector>
 #include <QDebug>
-
+class IUser;
 class ICard;
 class ITransaction;
 
@@ -22,7 +22,9 @@ public:
     virtual int balance() const = 0;
     virtual size_t id() const = 0;
     virtual bool isPaymentAccount() const = 0;
+    virtual short accountType() const =0;
     virtual void addCard(ICard* card) = 0;
+    virtual const IUser* getBoundUser() const =0;
     virtual ICard* getCard(const std::array<unsigned char, 7> & id) = 0;
     virtual const ICard* getCard(const std::array<unsigned char, 7> & id) const = 0;
     virtual void removeCard(const std::array<unsigned char, 7> & cardNum) = 0;

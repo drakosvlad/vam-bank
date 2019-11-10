@@ -24,6 +24,11 @@ const std::string& UserModel::getLogin() const
     return _login;
 };
 
+const std::string& UserModel::getPassword() const
+{
+    return _password;
+};
+
 void UserModel::setFirstName(const std::string& firstName)
 {
     _firstName = firstName;

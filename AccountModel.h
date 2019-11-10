@@ -30,9 +30,12 @@ public:
     int balance() const override { return this->_balance; }
     size_t id() const override { return this->_id; }
     bool isPaymentAccount() const override { return Policy::_isPaymentAccount; }
+    short accountType() const override {return Policy::_accountType;}
     void addCard(ICard* card) override;
+
     ICard* getCard(const std::array<unsigned char, 7> & id) override;
     const ICard* getCard(const std::array<unsigned char, 7> & id) const override;
+    const IUser* getBoundUser() const override {return _owner;}
     void removeCard(const std::array<unsigned char, 7> & cardNum) override;
     const std::vector<ICard*> cards() const override;
     const std::vector<const ITransaction*> transactions() const override;
