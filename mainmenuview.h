@@ -33,6 +33,7 @@ private:
     bool isCorrectRecipientsCard(const std::string&);
     acountlistview &acountList;
     IAccount* selectedAccount;
+   void  updateTransactions();
 };
 
 #endif // MAINMENUVIEW_H

@@ -83,7 +83,11 @@ void DatabaseConnect::addAccount(const IAccount * acc)
     _qrAddAccount->bindValue(":balance",acc->balance());
     _qrAddAccount->bindValue(":account_number",acc->accountType());
     _qrAddAccount->bindValue(":user_login",QString::fromStdString(acc->getBoundUser()->getLogin().c_str()));
-    _qrAddAccount->exec();
+    if (_qrAddAccount->exec())
+        qDebug()<<"ok"<<endl;
+    else
+        qDebug()<<"kek"<<endl;
+
 }
 
 void DatabaseConnect::addUser(const IUser* user)
@@ -104,7 +108,10 @@ void DatabaseConnect::addTransaction(const ITransaction* trans)
     _qrAddTransaction->bindValue(":account_from",static_cast<unsigned int>(trans->getSender().id()));
     _qrAddTransaction->bindValue(":account_to",static_cast<unsigned int>(trans->getReciever().id()));
     _qrAddTransaction->bindValue(":success",trans->getSuccess());
-    _qrAddTransaction->exec();
+    if (_qrAddTransaction->exec())
+        qDebug()<<"ok"<<endl;
+    else
+        qDebug()<<"kek"<<endl;
 }
 
 
