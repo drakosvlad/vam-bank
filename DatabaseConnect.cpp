@@ -36,8 +36,8 @@ DatabaseConnect::DatabaseConnect()
     _db.open();
 
     (_qrAddUser = new QSqlQuery(_db))->prepare("INSERT INTO users (login, first_name, last_name, password) VALUES (:login, :first_name, :last_name, :password)");
-    (_qrAddAccount = new QSqlQuery(_db))->prepare("INSERT INTO users (id, balance, account_number, user_login) VALUES (:id, :balance, :account_number, :user_login)");
-    (_qrAddTransaction=new QSqlQuery(_db))->prepare("INSERT INTO users (id, time_sent, time_received, amount, account_from, account_to, success) VALUES (:id, :time_sent, :time_received, :amount, :account_from, :account_to, :success) WHERE NOT EXISTS (SELECT id FROM transactions WHERE id = :id)");
+    (_qrAddAccount = new QSqlQuery(_db))->prepare("INSERT INTO accounts (id, balance, account_number, user_login) VALUES (:id, :balance, :account_number, :user_login)");
+    (_qrAddTransaction=new QSqlQuery(_db))->prepare("INSERT INTO transactions (id, time_sent, time_received, amount, account_from, account_to, success) VALUES (:id, :time_sent, :time_received, :amount, :account_from, :account_to, :success) WHERE NOT EXISTS (SELECT id FROM transactions WHERE id = :id)");
 
     (_qrRmUser = new QSqlQuery(_db))->prepare("DELETE FROM users WHERE login=:login");
     (_qrRmAccount = new QSqlQuery(_db))->prepare("DELETE FROM accounts WHERE id=:id");

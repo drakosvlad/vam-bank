@@ -9,6 +9,7 @@
 class AccountProxy : public IAccount {
 private:
     IAccount* _model;
+    mutable std::vector<ICard*> _toDeleteCards;
 public:
     AccountProxy(IAccount* model);
     ~AccountProxy() override;

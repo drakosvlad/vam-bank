@@ -18,11 +18,10 @@ TransactionQueueProcessor::~TransactionQueueProcessor()
 
 void TransactionQueueProcessor::run()
 {
-    while (true)
+    while (_go)
     {
         if (!TransactionQueue::getInstance().transactionAvailable())
         {
-            //qDebug() << "No transactions";
             msleep(20);
             continue;
         }
@@ -49,6 +48,14 @@ void TransactionQueueProcessor::run()
 
         transaction._from.addTransaction(transactionModel);
         transaction._to.addTransaction(transactionModel);
-        qDebug() << "Success";
+        if (success)
+            qDebug() << QString("Transferred %1 UAH from %2 to %3").arg(QString::number(transaction._amount),
+                                                                        QString::number(transaction._from.id()),
+                                                                        QString::number(transaction._to.id()));
     }
+}
+
+void TransactionQueueProcessor::stopProcessing()
+{
+    _go = false;
 }

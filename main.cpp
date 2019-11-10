@@ -17,5 +17,11 @@ int main(int argc, char *argv[])
     pr.start();
 
     w.show();
-    return a.exec();
+    auto code = a.exec();
+
+    // Finishing threads
+    pr.stopProcessing();
+    pr.wait();
+
+    return code;
 }
