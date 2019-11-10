@@ -1,5 +1,8 @@
+#pragma once
 #include <vector>
 #include "IUser.h"
+#include "UserModel.h"
+#include "UserProxy.h"
 #include "IAccount.h"
 #include "ITransaction.h"
 
@@ -9,14 +12,10 @@
 class Storage
 {
 private:
-    Storage() {  }
+    Storage();
+    std::vector<UserProxy*> _users;
 
-    std::vector<IUser*> _users;
-    std::vector<IAccount*> _accounts;
-    std::vector<ICard*> _cards;
-    std::vector<ITransaction*> _transactions;
-
-    Storage* _instance = nullptr;
+    static Storage* _instance;
 public:
     static Storage& getInstance();
 
@@ -28,21 +27,11 @@ public:
     IAccount* getAccount(const size_t id);
     ICard* getCard(const std::array<unsigned char, 16> number);
     ICard* getCard(const std::array<unsigned char, 7> id);
-    ITransaction* getTransaction(const size_t id);
+    const ITransaction* getTransaction(const size_t id);
 
-    const std::vector<IUser*> getUsers();
-    const std::vector<IAccount*> getAccounts();
-    const std::vector<ICard*> getCards();
-    const std::vector<ITransaction*> getTransactions();
-
-    void addUser(IUser* user);
-    void addAccount(IAccount* account);
-    void addCard(ICard* card);
-    void addTransaction(ITransaction* transaction);
-
-    void removeUser(const std::string login);
-    void removeAccount(const size_t id);
-    void removeCard(const std::array<unsigned char, 16> number);
+    void commitUser(IUser *);
+    void commitAccount(IAccount *);
+    void commitCard(ICard *);
 
     static size_t getNextTransactionId();
 };

@@ -25,13 +25,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        AccountProxy.cpp \
         CardModel.cpp \
         CardProxy.cpp \
+        IAccount.cpp \
+        ICard.cpp \
+        ITransaction.cpp \
+        IUser.cpp \
+        Storage.cpp \
         TerminalConnector.cpp \
         TransactionModel.cpp \
         TransactionQueue.cpp \
         TransactionQueueProcessor.cpp \
         UserModel.cpp \
+        UserProxy.cpp \
         main.cpp \
         mainmenuview.cpp \
         mainwindow.cpp

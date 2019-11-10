@@ -21,7 +21,7 @@ const std::array<unsigned char, 7> CardProxy::getCardId() const
     return _model.getCardId();
 }
 
-const IAccount& CardProxy::getAccount() const
+const IAccount* CardProxy::getAccount() const
 {
     return _model.getAccount();
 }

@@ -16,14 +16,12 @@ public:
             const std::string& firstName,
             const std::string& lastName,
             const std::string& password,
-            const std::string& login,
-            const std::vector<IAccount*> account
+            const std::string& login
         );
     ~UserModel() override;
 
     const std::string& getFirstName() const override;
     const std::string& getLastName() const override;
-    const std::string& getPassword() const override;
     const std::string& getLogin() const override;
     const IAccount* getAccount(const size_t) const override;
     IAccount* getAccount(const size_t) override;
@@ -33,9 +31,9 @@ public:
     void setPassword(const std::string &) override;
     void setLogin(const std::string &) override;
 
-    void verifyPassword(const std::string&) const override;
+    bool verifyPassword(const std::string&) const override;
     void addAccount(IAccount*) override;
-    void removeAccount(const IAccount&) override;
+    void removeAccount(const IAccount *) override;
     const std::vector<IAccount*>& accounts() override;
 
 };

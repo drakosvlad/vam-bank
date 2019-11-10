@@ -88,7 +88,7 @@ const QString TerminalConnector::processCreateTransactionCommand(const QString &
         return FAILURE_MESSAGE;
 
     const size_t transactionId(Storage::getInstance().getNextTransactionId());
-    emit transaction(card->getAccount().id(), _ownerAccount.id(), amount, transactionId);
+    emit transaction(card->getAccount()->id(), _ownerAccount.id(), amount, transactionId);
 
     return QString::number(transactionId);
 }

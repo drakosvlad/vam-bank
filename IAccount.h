@@ -12,30 +12,29 @@ class ITransaction;
  */
 class IAccount
 {
-protected:
-    /**
-   * Adds the amount of received money to the account, including the fee
-   */
-    virtual void acceptTransfer(const int amount) = 0;
 public:
-    virtual ~IAccount() = 0;
+    virtual ~IAccount();
+    /**
+     * Adds the amount of received money to the account, including the fee
+     */
+    virtual void acceptTransfer(const int amount) = 0;
     virtual void transfer(IAccount& acc, const int amount) = 0;
     virtual int balance() const = 0;
     virtual size_t id() const = 0;
     virtual bool isPaymentAccount() const = 0;
-    virtual void addCard(ICard & card) = 0;
-    virtual ICard* getCard(const std::array<unsigned char, 16> & cardNum) const = 0;
+    virtual void addCard(ICard* card) = 0;
+    virtual ICard* getCard(const std::array<unsigned char, 16> & cardNum) = 0;
+    virtual const ICard* getCard(const std::array<unsigned char, 16> & cardNum) const = 0;
+    virtual ICard* getCard(const std::array<unsigned char, 7> & id) = 0;
+    virtual const ICard* getCard(const std::array<unsigned char, 7> & id) const = 0;
     virtual void removeCard(const std::array<unsigned char, 16> & cardNum) = 0;
-    virtual const std::vector<ICard*>& cards() = 0;
-    virtual const std::vector<const ITransaction*>& transactions() const = 0;
+    virtual const std::vector<ICard*> cards() const = 0;
+    virtual const std::vector<const ITransaction*> transactions() const = 0;
+    virtual void addTransaction(const ITransaction *) = 0;
+    virtual const ITransaction* getTransaction(const size_t id) const = 0;
 };
 
-template <typename Policy>
-std::ostream& operator<<(std::ostream& out, const IAccount& account)
-{
-    out << "Account #" << account.id() << " with the balance of UAH" << account.balance();
-    return out;
-}
+std::ostream& operator<<(std::ostream& out, const IAccount& account);
 
 /**
  * Class for handling Transfer errors
@@ -56,15 +55,7 @@ public:
     const char * message() const { return _message; }
 };
 
-std::ostream& operator<<(std::ostream& out, const TransferError& error)
-{
-    out << "TRANSFER ERROR: " << error.message() << std::endl;
-    return out;
-}
+std::ostream& operator<<(std::ostream& out, const TransferError& error);
 
-QDebug operator<<(QDebug debug, const TransferError& error)
-{
-    debug << error.message();
-    return debug;
-}
+QDebug operator<<(QDebug debug, const TransferError& error);
 

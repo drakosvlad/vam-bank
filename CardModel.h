@@ -22,11 +22,12 @@ public:
     );
     ~CardModel() override;
     CardModel(const CardModel&) = delete;
-    CardModel& operator=(const CardModel &)=delete;
+    CardModel& operator=(const CardModel &) = delete;
+
     void changePin(const std::array<unsigned char, 4> &) override;
     bool verifyPin(const std::array<unsigned char, 4> &) const override;
     const std::array<unsigned char, 16> getCardNumber() const override;
     const std::array<unsigned char,7> getCardId() const override;
-    const IAccount& getAccount() const override;
+    const IAccount* getAccount() const override;
     const DueDate getDueDate() const override;
 };

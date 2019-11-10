@@ -1,12 +1,14 @@
 #include "TransactionModel.h"
 
-TransactionModel::TransactionModel(const IAccount &from,
+TransactionModel::TransactionModel(const size_t id,
+                                   const IAccount &from,
                                    const IAccount &to,
                                    const int amount,
                                    const bool success,
                                    const QDateTime& timeSent,
                                    const QDateTime& timeReceived)
-    : _from(from),
+    : _id(id),
+      _from(from),
       _to(to),
       _amount(amount),
       _success(success),
@@ -22,7 +24,8 @@ TransactionModel::~TransactionModel()
 }
 
 TransactionModel::TransactionModel(const TransactionModel& m)
-    : _from(m._from),
+    : _id(m._id),
+      _from(m._from),
       _to(m._to),
       _amount(m._amount),
       _success(m._success),
@@ -60,4 +63,9 @@ int TransactionModel::getAmount() const
 bool TransactionModel::getSuccess() const
 {
     return _success;
+}
+
+size_t TransactionModel::getId() const
+{
+    return _id;
 }

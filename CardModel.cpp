@@ -41,9 +41,9 @@ const std::array<unsigned char,7> CardModel::getCardId() const
     return _cardId;
 }
 
-const IAccount& CardModel::getAccount() const
+const IAccount* CardModel::getAccount() const
 {
-    return _boundAccount;
+    return &_boundAccount;
 }
 
 const DueDate CardModel::getDueDate() const

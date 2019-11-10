@@ -1,7 +1,7 @@
 #pragma once
 #include <array>
-#include <string>
-#include <IAccount.h>
+
+class IAccount;
 
 /**
  * Bit field for storing card due date up to 4095 year
@@ -18,13 +18,13 @@ struct DueDate
 class ICard
 {
 public:
-    virtual ~ICard() = 0;
+    virtual ~ICard();
     virtual void changePin(const std::array<unsigned char, 4> &) = 0;
-    virtual bool verifyPin(const std::array<unsigned char, 4> &) const;
+    virtual bool verifyPin(const std::array<unsigned char, 4> &) const = 0;
     // Array containing 16 digits
     virtual const std::array<unsigned char, 16> getCardNumber() const = 0;
     // Array containing 7 bytes
     virtual const std::array<unsigned char, 7> getCardId() const = 0;
-    virtual const IAccount& getAccount() const = 0;
+    virtual const IAccount* getAccount() const = 0;
     virtual const DueDate getDueDate() const = 0;
 };

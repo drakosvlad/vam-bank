@@ -12,6 +12,7 @@
 class TransactionModel final: public ITransaction
 {
 private:
+    const size_t _id;
     const IAccount& _from;
     const IAccount& _to;
     const int _amount;
@@ -20,7 +21,8 @@ private:
     const QDateTime _timeReceived;
 
 public:
-    TransactionModel(const IAccount &from,
+    TransactionModel(const size_t id,
+                     const IAccount &from,
                      const IAccount &to,
                      const int amount,
                      const bool success,
@@ -35,4 +37,5 @@ public:
     const QDateTime getTimeRecieved() const override;
     int getAmount() const override;
     bool getSuccess() const override;
+    size_t getId() const override;
 };

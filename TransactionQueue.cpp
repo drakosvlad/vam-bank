@@ -41,7 +41,7 @@ void TransactionQueue::receiveTransaction(IAccount& fromAccount, IAccount& toAcc
 
 TransactionStatus TransactionQueue::getTransactionStatus(size_t transactionId)
 {
-    ITransaction* transaction = Storage::getInstance().getTransaction(transactionId);
+    const ITransaction* transaction = Storage::getInstance().getTransaction(transactionId);
     if (transaction != nullptr)
         return transaction->getSuccess() ? TransactionStatus::Succeeded : TransactionStatus::Failed;
     return TransactionStatus::Pending;

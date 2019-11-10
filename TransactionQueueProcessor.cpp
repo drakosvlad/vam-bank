@@ -38,12 +38,15 @@ void TransactionQueueProcessor::run()
             success = false;
         }
 
-        ITransaction* transactionModel = new TransactionModel(transaction._from,
-                                                         transaction._to,
-                                                         transaction._amount,
-                                                         success,
-                                                         QDateTime::currentDateTime(),
-                                                         QDateTime::currentDateTime());
-        Storage::getInstance().addTransaction(transactionModel);
+        ITransaction* transactionModel = new TransactionModel(transaction._transactionId,
+                                                              transaction._from,
+                                                             transaction._to,
+                                                             transaction._amount,
+                                                             success,
+                                                             QDateTime::currentDateTime(),
+                                                             QDateTime::currentDateTime());
+
+        transaction._from.addTransaction(transactionModel);
+        transaction._to.addTransaction(transactionModel);
     }
 }
