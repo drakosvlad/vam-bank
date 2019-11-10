@@ -37,7 +37,7 @@ DatabaseConnect::DatabaseConnect()
 
     (_qrAddUser = new QSqlQuery(_db))->prepare("INSERT INTO users (login, first_name, last_name, password) VALUES (:login, :first_name, :last_name, :password)");
     (_qrAddAccount = new QSqlQuery(_db))->prepare("INSERT INTO accounts (id, balance, account_number, user_login) VALUES (:id, :balance, :account_number, :user_login)");
-    (_qrAddTransaction=new QSqlQuery(_db))->prepare("INSERT INTO transactions (id, time_sent, time_received, amount, account_from, account_to, success) VALUES (:id, :time_sent, :time_received, :amount, :account_from, :account_to, :success) WHERE NOT EXISTS (SELECT id FROM transactions WHERE id = :id)");
+    (_qrAddTransaction=new QSqlQuery(_db))->prepare("INSERT IGNORE INTO transactions (id, time_sent, time_recieved, amount, account_from, account_to, success) VALUES (:id, :time_sent, :time_recieved, :amount, :account_from, :account_to, :success)");
 
     (_qrRmUser = new QSqlQuery(_db))->prepare("DELETE FROM users WHERE login=:login");
     (_qrRmAccount = new QSqlQuery(_db))->prepare("DELETE FROM accounts WHERE id=:id");
@@ -83,7 +83,11 @@ void DatabaseConnect::addAccount(const IAccount * acc)
     _qrAddAccount->bindValue(":balance",acc->balance());
     _qrAddAccount->bindValue(":account_number",acc->accountType());
     _qrAddAccount->bindValue(":user_login",QString::fromStdString(acc->getBoundUser()->getLogin().c_str()));
-    _qrAddAccount->exec();
+    if (_qrAddAccount->exec())
+        qDebug()<<"ok"<<endl;
+    else
+        qDebug()<<"kek"<<endl;
+
 }
 
 void DatabaseConnect::addUser(const IUser* user)
@@ -104,7 +108,10 @@ void DatabaseConnect::addTransaction(const ITransaction* trans)
     _qrAddTransaction->bindValue(":account_from",static_cast<unsigned int>(trans->getSender().id()));
     _qrAddTransaction->bindValue(":account_to",static_cast<unsigned int>(trans->getReciever().id()));
     _qrAddTransaction->bindValue(":success",trans->getSuccess());
-    _qrAddTransaction->exec();
+    if (_qrAddTransaction->exec())
+        qDebug()<<"ok"<<endl;
+    else
+        qDebug()<<"kek"<<endl;
 }
 
 
