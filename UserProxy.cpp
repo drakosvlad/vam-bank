@@ -10,7 +10,12 @@ UserProxy::UserProxy(UserModel &model) : _userModel(model)
 
 UserProxy::~UserProxy()
 {
+    for (auto p : _toDeleteAccounts)
+    {
+        delete p;
+    }
 
+    _toDeleteAccounts.clear();
 }
 
 bool UserProxy::verifyPassword(const std::string &password) const
@@ -39,15 +44,23 @@ const std::string& UserProxy::getPassword() const
 
 const IAccount* UserProxy::getAccount(const size_t id) const
 {
-    // TODO delete
     auto account = _userModel.getAccount(id);
-    return account == nullptr ? nullptr: new AccountProxy(account);
+    if (account!=nullptr){
+        _toDeleteAccounts.push_back(new AccountProxy(account));
+        return _toDeleteAccounts.back();
+    }
+    return nullptr;
+
 }
 
 IAccount* UserProxy::getAccount(const size_t id)
 {
     auto account = _userModel.getAccount(id);
-    return account == nullptr ? nullptr: new AccountProxy(account);
+    if (account!=nullptr){
+        _toDeleteAccounts.push_back(new AccountProxy(account));
+        return _toDeleteAccounts.back();
+    }
+    return nullptr;
 }
 
 void UserProxy::setFirstName(const std::string &name)
@@ -92,7 +105,8 @@ const std::vector<IAccount*> UserProxy::accounts()
     std::vector<IAccount*> modelAccounts = _userModel.accounts();
     for (std::vector<IAccount*>::iterator itor = modelAccounts.begin(); itor != modelAccounts.end(); ++itor)
     {
-        proxyAccounts.push_back(new AccountProxy(*itor));
+        _toDeleteAccounts.push_back(new AccountProxy(*itor));
+        proxyAccounts.push_back(_toDeleteAccounts.back());
     }
     return proxyAccounts;
 }

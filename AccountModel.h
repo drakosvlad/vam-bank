@@ -82,7 +82,7 @@ void AccountModel<Policy>::addCard(ICard* card)
 template <typename Policy>
 const QString AccountModel<Policy>::getAccountName() const
 {
-    switch (_id) {
+    switch (accountType()) {
     case 0:
         return QString("Debit account");
     case 1:
