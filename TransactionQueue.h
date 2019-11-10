@@ -28,7 +28,7 @@ class TransactionQueue : public QObject
 private:
     TransactionQueue(QObject *parent = nullptr) : QObject(parent) {  }
     QSemaphore _semaphore;
-    std::deque<const TransactionStub> _queue;
+    std::deque<TransactionStub> _queue;
 
     static TransactionQueue* _instance;
 public:
