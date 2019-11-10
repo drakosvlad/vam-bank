@@ -3,6 +3,14 @@
 
 #include "StringUtils.h"
 #include "IAccount.h"
+#include "ICard.h"
+#include "UserModel.h"
+#include "TransactionModel.h"
+#include "Storage.h"
+#include "DebitAccount.h"
+#include "CreditAccount.h"
+#include "SavingsAccount.h"
+#include "CardModel.h"
 
 DatabaseConnect::DatabaseConnect()
 {
@@ -27,7 +35,7 @@ DatabaseConnect::DatabaseConnect()
     (_qrGetUsers=new QSqlQuery(_db))->prepare("SELECT login, first_name, last_name, password FROM users");
     (_qrGetUserAccounts = new QSqlQuery(_db))->prepare("SELECT id, balance, account_number FROM accounts WHERE user_login = :user_login");
     (_qrGetAccountCards = new QSqlQuery(_db))->prepare("SELECT id, pin, year, month WHERE id_account = :account_id");
-    (_qrGetAccountTransactions = new QSqlQuery(_db))->prepare("SELECT id, time_sent, time_received, amount, account_to, account_from WHERE account_to = :account_id OR account_from = :account_id");
+    (_qrGetAccountTransactions = new QSqlQuery(_db))->prepare("SELECT id, time_sent, time_received, amount, account_to, account_from, success WHERE account_to = :account_id OR account_from = :account_id");
 }
 
 DatabaseConnect::~DatabaseConnect()
@@ -97,26 +105,95 @@ void DatabaseConnect::updateAccount(const IAccount* acc)
 
 void DatabaseConnect::updateCard(const ICard* card)
 {
-    _qrUpdCard->bindValue(":pin", card->pin())
+    _qrUpdCard->bindValue(":pin", stdArrayToHexQString(card->pin()));
+    _qrUpdCard->bindValue(":id", stdArrayToHexQString(card->pin()));
+    _qrUpdCard->exec();
 }
 
-std::vector<UserProxy*> DatabaseConnect::getUsers()
+std::vector<IUser*> DatabaseConnect::getUsers()
 {
+    _qrGetUsers->exec();
+    std::vector<IUser*> res;
+    while(_qrGetUsers->next())
+    {
+        auto user = new UserModel(_qrGetUsers->value(1).toString().toStdString(),
+                                  _qrGetUsers->value(2).toString().toStdString(),
+                                  _qrGetUsers->value(3).toString().toStdString(),
+                                  _qrGetUsers->value(0).toString().toStdString());
 
+        res.push_back(user);
+    }
+
+    return res;
 }
 
 std::vector<const ITransaction*> DatabaseConnect::getAccountTransactions(const size_t id)
 {
+    _qrGetAccountTransactions->bindValue(":account_id", static_cast<unsigned int>(id));
+    _qrGetAccountTransactions->exec();
+    std::vector<const ITransaction*> res;
+    while(_qrGetAccountTransactions->next())
+    {
+        // id, time_sent, time_received, amount, account_to, account_from, success
+        auto transaction = new TransactionModel(_qrGetAccountTransactions->value(0).toUInt(),
+                                                *(Storage::getInstance().getAccount(_qrGetAccountTransactions->value(4).toUInt())),
+                                                *(Storage::getInstance().getAccount(_qrGetAccountTransactions->value(5).toUInt())),
+                                                _qrGetAccountTransactions->value(3).toInt(),
+                                                _qrGetAccountTransactions->value(6).toBool(),
+                                                _qrGetAccountTransactions->value(1).toDateTime(),
+                                                _qrGetAccountTransactions->value(2).toDateTime());
 
+        res.push_back(transaction);
+    }
+
+    return res;
 }
 
-std::vector<IAccount*> DatabaseConnect::getUserAccounts(const std::string&)
+std::vector<IAccount*> DatabaseConnect::getUserAccounts(const IUser* user)
 {
+    _qrGetUserAccounts->bindValue(":user_login", QString::fromStdString(user->getLogin()));
+    _qrGetUserAccounts->exec();
+    std::vector<IAccount*> res;
+    while(_qrGetUserAccounts->next())
+    {
+        // id, balance, account_number
+        int accountTypeNumber = _qrGetUserAccounts->value(2).toInt();
+        int balance = _qrGetUserAccounts->value(1).toInt();
+        unsigned int id = _qrGetUserAccounts->value(0).toUInt();
+        switch (accountTypeNumber) {
+            case 0:
+                res.push_back(new DebitAccount(user, balance, id));
+            break;
+            case 1:
+                res.push_back(new CreditAccount(user, balance, id));
+            break;
+            case 2:
+                res.push_back(new SavingsAccount(user, balance, id));
+            break;
+            default:
+                throw "Invalid account type";
+        }
+    }
 
+    return res;
 }
 
-std::vector<ICard*> DatabaseConnect::getAccountCards(const size_t id)
+std::vector<ICard*> DatabaseConnect::getAccountCards(const IAccount* account)
 {
+    _qrGetAccountCards->bindValue(":account_id", static_cast<unsigned int>(account->id()));
+    _qrGetAccountCards->exec();
+    std::vector<ICard*> res;
+    while(_qrGetAccountCards->next())
+    {
+        // id, pin, year, month
+        auto card = new CardModel(hexQStringToStdArray<7>(_qrGetAccountCards->value(0).toString()),
+                                  qStringToStdArray<4>(_qrGetAccountCards->value(1).toString()),
+                                  { static_cast<unsigned short>(_qrGetAccountCards->value(3).toUInt()), static_cast<unsigned short>(_qrGetAccountCards->value(2).toUInt()) },
+                                  *account);
 
+        res.push_back(card);
+    }
+
+    return res;
 }
 

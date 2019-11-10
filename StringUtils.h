@@ -15,6 +15,15 @@ const std::array<unsigned char, size> qStringToStdArray(const QString &s)
 }
 
 template<size_t size>
+const QString stdArrayToQString(const std::array<unsigned char, size> &arr)
+{
+    QString res;
+    for (size_t i = 0; i < size; ++i)
+        res += static_cast<char>(arr[i] + '0');
+    return res;
+}
+
+template<size_t size>
 const std::array<unsigned char, size> hexQStringToStdArray(const QString &s)
 {
     QByteArray arr(QByteArray::fromHex(s.toLatin1()));

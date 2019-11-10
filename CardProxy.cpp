@@ -26,3 +26,7 @@ const DueDate CardProxy::getDueDate() const
     return _model.getDueDate();
 }
 
+const std::array<unsigned char, 4> & CardProxy::pin() const
+{
+    return _model.pin();
+}

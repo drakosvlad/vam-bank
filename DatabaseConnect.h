@@ -52,10 +52,10 @@ public:
     void updateAccount(const IAccount*);
     void updateCard(const ICard*);
 
-    std::vector<UserProxy*> getUsers();
+    std::vector<IUser*> getUsers();
     std::vector<const ITransaction*> getAccountTransactions(const size_t);
-    std::vector<IAccount*> getUserAccounts(const std::string&);
-    std::vector<ICard*> getAccountCards(const size_t id);
+    std::vector<IAccount*> getUserAccounts(const IUser* user);
+    std::vector<ICard*> getAccountCards(const IAccount* account);
 };
 
 #endif // DATABASECONNECT_H

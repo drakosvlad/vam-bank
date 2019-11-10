@@ -27,6 +27,7 @@ SOURCES += \
         AccountProxy.cpp \
         CardModel.cpp \
         CardProxy.cpp \
+        DatabaseConfig.cpp \
         IAccount.cpp \
         ICard.cpp \
         ITransaction.cpp \
