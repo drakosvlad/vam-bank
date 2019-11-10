@@ -115,6 +115,7 @@ void MainMenuView::on_widthdraw_B_clicked()
 
 void MainMenuView::on_signOut_B_clicked()
 {
+    acountList.refreshAccountsList();
     acountList.show();
     this->close();
 }

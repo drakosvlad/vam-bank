@@ -210,7 +210,11 @@ QPushButton:hover{
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="password_TB"/>
+        <widget class="QLineEdit" name="password_TB">
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>

@@ -22,8 +22,8 @@
 
 QString DatabaseConnect::dbHost = QString("localhost");
 QString DatabaseConnect::dbName = QString("vam_fant");
-QString DatabaseConnect::dbPass = QString("123456");
-QString DatabaseConnect::dbUser = QString("fant");
+QString DatabaseConnect::dbPass = QString("rootroot");
+QString DatabaseConnect::dbUser = QString("root");
 
 
 DatabaseConnect* DatabaseConnect::_instance= nullptr;

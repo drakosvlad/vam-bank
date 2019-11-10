@@ -16,20 +16,19 @@ class acountlistview : public QDialog
 public:
     explicit acountlistview(signinview &,IUser &, QWidget *parent = nullptr);
     ~acountlistview();
-
+    void refreshAccountsList();
 private slots:
     void on_pushButton_clicked();
 
     void on_manageButton_clicked();
 
     void on_addAccount_B_clicked();
-
 private:
     Ui::acountlistview *ui;
     signinview &signInView;
     IUser &_user;
     MainMenuView *mainMenu;
-    void refreshAccountsList();
+
 };
 
 #endif // ACOUNTLISTVIEW_H
