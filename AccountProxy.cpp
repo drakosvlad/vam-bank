@@ -112,3 +112,25 @@ const ITransaction* AccountProxy::getTransaction(const size_t id) const
 {
     return _model->getTransaction(id);
 }
+
+const QDate AccountProxy::creationDate() const
+{
+    return _model->creationDate();
+}
+
+const QDate AccountProxy::payrollDate() const
+{
+    return _model->payrollDate();
+}
+
+int AccountProxy::creditLimit() const
+{
+    return _model->creditLimit();
+}
+
+int AccountProxy::payroll()
+{
+    int fee = _model->payroll();
+    Storage::getInstance().commitAccount(_model);
+    return fee;
+}

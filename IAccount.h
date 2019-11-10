@@ -33,6 +33,11 @@ public:
     virtual const std::vector<const ITransaction*> transactions() const = 0;
     virtual void addTransaction(const ITransaction *) = 0;
     virtual const ITransaction* getTransaction(const size_t id) const = 0;
+    virtual const QDate creationDate() const = 0;
+    virtual const QDate payrollDate() const = 0;
+    virtual int creditLimit() const = 0;
+
+    virtual int payroll() = 0;
 };
 
 std::ostream& operator<<(std::ostream& out, const IAccount& account);

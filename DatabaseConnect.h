@@ -35,8 +35,8 @@ private:
     QSqlQuery* _qrGetAccountTransactions;
     QSqlQuery* _qrGetUsers;
 
-    size_t _maxAccountId = 0;
-    size_t _maxTransactionId = 0;
+    size_t _maxAccountId = 1;
+    size_t _maxTransactionId = 1;
 
 public:
     static DatabaseConnect& getInstance();

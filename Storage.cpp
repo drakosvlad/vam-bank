@@ -2,22 +2,17 @@
 
 #include "DatabaseConnect.h"
 #include "DebitAccount.h"
+#include "PayrollAccount.h"
 #include "CardModel.h"
 
 Storage* Storage::_instance = nullptr;
 
 Storage::Storage()
 {
-    // TEMP SEED
-    auto user = new UserModel("Lolkek", "Cheburek", "123456", "lolkek");
-    auto account1 = new DebitAccount(user, 1000, 123);
-    auto account2 = new DebitAccount(user, 2000, 124);
-    user->addAccount(account1);
-    user->addAccount(account2);
-
-    _users.push_back(new UserProxy(*user));
-
     std::vector<IUser*> models = DatabaseConnect::getInstance().getUsers();
+    UserProxy* admin = new UserProxy(*new UserModel("Admin", "Admin", "admin", "admin"));
+    _users.push_back(admin);
+    admin->addAccount(new PayrollAccount(admin, 0, QDate::currentDate(), QDate::currentDate(), 0, 0));
 
     for (std::vector<IUser*>::iterator itor = models.begin(); itor != models.end(); itor++)
     {

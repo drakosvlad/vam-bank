@@ -32,4 +32,9 @@ public:
     const std::vector<const ITransaction*> transactions() const override;
     void addTransaction(const ITransaction *) override;
     const ITransaction* getTransaction(const size_t id) const override;
+    const QDate creationDate() const override;
+    const QDate payrollDate() const override;
+    int creditLimit() const override;
+
+    int payroll() override;
 };

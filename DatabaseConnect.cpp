@@ -20,8 +20,8 @@
 
 QString DatabaseConnect::dbHost = QString("localhost");
 QString DatabaseConnect::dbName = QString("vam_fant");
-QString DatabaseConnect::dbPass = QString("rootroot");
-QString DatabaseConnect::dbUser = QString("root");
+QString DatabaseConnect::dbPass = QString("123456");
+QString DatabaseConnect::dbUser = QString("fant");
 
 
 DatabaseConnect* DatabaseConnect::_instance= nullptr;
@@ -37,17 +37,17 @@ DatabaseConnect::DatabaseConnect()
 
     (_qrAddUser = new QSqlQuery(_db))->prepare("INSERT INTO users (login, first_name, last_name, password) VALUES (:login, :first_name, :last_name, :password)");
     (_qrAddAccount = new QSqlQuery(_db))->prepare("INSERT INTO accounts (id, balance, account_number, user_login) VALUES (:id, :balance, :account_number, :user_login)");
-    (_qrAddTransaction=new QSqlQuery(_db))->prepare("INSERT INTO transactions (id, time_sent, time_received, amount, account_from, account_to, success) VALUES (:id, :time_sent, :time_received, :amount, :account_from, :account_to, :success) WHERE NOT EXISTS (SELECT id FROM transactions WHERE id = :id)");
+    (_qrAddTransaction=new QSqlQuery(_db))->prepare("INSERT IGNORE INTO transactions (id, time_sent, time_received, amount, account_from, account_to, success) VALUES (:id, :time_sent, :time_received, :amount, :account_from, :account_to, :success)");
 
     (_qrRmUser = new QSqlQuery(_db))->prepare("DELETE FROM users WHERE login=:login");
     (_qrRmAccount = new QSqlQuery(_db))->prepare("DELETE FROM accounts WHERE id=:id");
 
     (_qrUpdUser = new QSqlQuery(_db))->prepare("UPDATE users SET password = :password WHERE login = :login");
-    (_qrUpdAccount = new QSqlQuery(_db))->prepare("UPDATE accounts SET balance = :balance WHERE id = :id");
+    (_qrUpdAccount = new QSqlQuery(_db))->prepare("UPDATE accounts SET balance = :balance, payroll_date = :payroll_date WHERE id = :id");
     (_qrUpdCard = new QSqlQuery(_db))->prepare("UPDATE cards SET pin = :pin WHERE card_id = :id");
 
     (_qrGetUsers=new QSqlQuery(_db))->prepare("SELECT login, first_name, last_name, password FROM users");
-    (_qrGetUserAccounts = new QSqlQuery(_db))->prepare("SELECT id, balance, account_number FROM accounts WHERE user_login = :user_login");
+    (_qrGetUserAccounts = new QSqlQuery(_db))->prepare("SELECT id, balance, account_number, creation_date, payroll_date, credit_limit FROM accounts WHERE user_login = :user_login");
     (_qrGetAccountCards = new QSqlQuery(_db))->prepare("SELECT id, pin, year, month FROM cards WHERE id_account = :account_id");
     (_qrGetAccountTransactions = new QSqlQuery(_db))->prepare("SELECT id, time_sent, time_received, amount, account_to, account_from, success FROM transactions WHERE (account_to = :account_id OR account_from = :account_id)");
 }
@@ -131,6 +131,7 @@ void DatabaseConnect::updateUser(const IUser* user)
 void DatabaseConnect::updateAccount(const IAccount* acc)
 {
     _qrUpdAccount->bindValue(":balance", acc->balance());
+    _qrUpdAccount->bindValue(":payroll_date", acc->payrollDate());
     _qrUpdAccount->bindValue(":id", static_cast<unsigned int>(acc->id()));
     _qrUpdAccount->exec();
 }
@@ -190,23 +191,26 @@ std::vector<IAccount*> DatabaseConnect::getUserAccounts(const IUser* user)
     std::vector<IAccount*> res;
     while(_qrGetUserAccounts->next())
     {
-        // id, balance, account_number
+        // id, balance, account_number, creation_date, payroll_date, credit_limit
         int accountTypeNumber = _qrGetUserAccounts->value(2).toInt();
         int balance = _qrGetUserAccounts->value(1).toInt();
         unsigned int id = _qrGetUserAccounts->value(0).toUInt();
+        QDate creation_date = _qrGetUserAccounts->value(3).toDate();
+        QDate payroll_date = _qrGetUserAccounts->value(4).toDate();
+        int creditLimit = _qrGetUserAccounts->value(5).toInt();
 
         if (id > _maxAccountId)
             _maxAccountId = id;
 
         switch (accountTypeNumber) {
             case 0:
-                res.push_back(new DebitAccount(user, balance, id));
+                res.push_back(new DebitAccount(user, balance, creation_date, payroll_date, creditLimit, id));
             break;
             case 1:
-                res.push_back(new CreditAccount(user, balance, id));
+                res.push_back(new CreditAccount(user, balance, creation_date, payroll_date, creditLimit, id));
             break;
             case 2:
-                res.push_back(new SavingsAccount(user, balance, id));
+                res.push_back(new SavingsAccount(user, balance, creation_date, payroll_date, creditLimit, id));
             break;
             default:
                 throw "Invalid account type";

@@ -17,11 +17,14 @@ private:
     const IUser& _owner;
     int _balance = 0;
     size_t _id;
+    QDate _creationDate;
+    QDate _payrollDate;
+    int _creditLimit;
     std::vector<ICard*> _cards;
     std::vector<const ITransaction*> _transactions;
 
 public:
-    AccountModel(const IUser* owner, const int balance, size_t id);
+    AccountModel(const IUser* owner, const int balance, const QDate& creationDate, const QDate& payrollDate, int creditLimit, size_t id);
     ~AccountModel(){  }
     AccountModel(const AccountModel & am) = delete;
     AccountModel& operator=(const AccountModel & am) = delete;
@@ -43,11 +46,16 @@ public:
     const std::vector<const ITransaction*> transactions() const override;
     void addTransaction(const ITransaction *) override;
     const ITransaction* getTransaction(const size_t id) const override;
+    const QDate creationDate() const override;
+    const QDate payrollDate() const override;
+    int creditLimit() const override;
+
+    int payroll() override;
 };
 
 template <typename Policy>
-AccountModel<Policy>::AccountModel(const IUser* owner, int balance, size_t id)
-    : _owner(*owner), _balance(balance), _id(id) {  }
+AccountModel<Policy>::AccountModel(const IUser* owner, int balance, const QDate& creationDate, const QDate& payrollDate, int creditLimit, size_t id)
+    : _owner(*owner), _balance(balance), _creationDate(creationDate), _payrollDate(payrollDate), _creditLimit(creditLimit), _id(id) {  }
 
 template <typename Policy>
 void AccountModel<Policy>::acceptTransfer(const int amount)
@@ -159,4 +167,28 @@ template <typename Policy>
 void AccountModel<Policy>::addTransaction(const ITransaction *tr)
 {
     _transactions.push_back(tr);
+}
+
+template <typename Policy>
+const QDate AccountModel<Policy>::creationDate() const
+{
+    return _creationDate;
+}
+
+template <typename Policy>
+const QDate AccountModel<Policy>::payrollDate() const
+{
+    return _payrollDate;
+}
+
+template <typename Policy>
+int AccountModel<Policy>::creditLimit() const
+{
+    return _creditLimit;
+}
+
+template <typename Policy>
+int AccountModel<Policy>::payroll()
+{
+    return 0;
 }

@@ -4,6 +4,7 @@
 
 #include "Storage.h"
 #include "TransactionQueueProcessor.h"
+#include "PayrollProcessor.h"
 
 int main(int argc, char *argv[])
 {
@@ -11,10 +12,11 @@ int main(int argc, char *argv[])
     MainWindow w;
     Storage::getInstance();
 
-    Storage::getInstance();
-
     TransactionQueueProcessor pr;
     pr.start();
+
+    PayrollProcessor pp;
+    pp.start();
 
     w.show();
     auto code = a.exec();
@@ -22,6 +24,9 @@ int main(int argc, char *argv[])
     // Finishing threads
     pr.stopProcessing();
     pr.wait();
+
+    pp.stopProcessing();
+    pp.wait();
 
     return code;
 }
