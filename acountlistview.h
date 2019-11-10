@@ -22,11 +22,14 @@ private slots:
 
     void on_manageButton_clicked();
 
+    void on_addAccount_B_clicked();
+
 private:
     Ui::acountlistview *ui;
     signinview &signInView;
     IUser &_user;
     MainMenuView *mainMenu;
+    void refreshAccountsList();
 };
 
 #endif // ACOUNTLISTVIEW_H

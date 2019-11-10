@@ -2,23 +2,33 @@
 #include "ui_acountlistview.h"
 #include "signinview.h"
 #include "Storage.h"
+#include "DebitAccount.h"
+#include "SavingsAccount.h"
+#include "CreditAccount.h"
+#include <QMessageBox>
 
 acountlistview::acountlistview(signinview & signIn,IUser & user, QWidget *parent) :
     QDialog(parent),ui(new Ui::acountlistview),
     signInView(signIn),_user(user)
 {
-
-    std::vector<IAccount*> accounts = _user.accounts();
-
     ui->setupUi(this);
+    refreshAccountsList();
+
+    ui->setName_L->setText(QString::fromStdString(_user.getFirstName()));
+    ui->setSurname_L->setText(QString::fromStdString(_user.getLastName()));
+    ui->accountList_B->addItem("Debit");
+    ui->accountList_B->addItem("Credit");
+    ui->accountList_B->addItem("Saving");
+}
+
+void acountlistview::refreshAccountsList()
+{
+     std::vector<IAccount*> accounts = _user.accounts();
+
     for (std::vector<IAccount*>::iterator itor = accounts.begin(); itor != accounts.end(); ++itor)
     {
-        ui->acountList_CB->addItem(QString::number((*itor)->id()) + " - " + QString::number((*itor)->balance()/10) + "UAH");
+        ui->acountList_CB->addItem((*itor)->getAccountName()+ ": " +  QString::number((*itor)->id()) + " - " + QString::number((*itor)->balance()/10) + "UAH");
     }
-
-
-    ui->setName_L->setText("TEXT");
-    ui->setSurname_L->setText("TEXT");
 }
 
 acountlistview::~acountlistview()
@@ -39,4 +49,31 @@ void acountlistview::on_manageButton_clicked()
     mainMenu->show();
     this->hide();
 
+}
+
+void acountlistview::on_addAccount_B_clicked()
+{
+    std::string type = ui->accountList_B->currentText().toLocal8Bit().constData();
+    if (type.compare("Debit")==0)
+    {
+        auto account = new DebitAccount(&_user,0, Storage::getInstance().getNextAccountId());
+        _user.addAccount(account);
+        ui->acountList_CB->addItem(account->getAccountName()+ ": " +  QString::number(account->id()) + " - " + QString::number(account->balance()/10) + "UAH");
+
+        QMessageBox::information(this, "202", "Successfully added ");
+    }
+    else  if (type.compare("Credit")==0)
+    {
+        auto account = new CreditAccount(&_user,100000, Storage::getInstance().getNextAccountId());
+         _user.addAccount(account);
+         ui->acountList_CB->addItem(account->getAccountName()+ ": " +  QString::number(account->id()) + " - " + QString::number(account->balance()/10) + "UAH");
+         QMessageBox::information(this, "202", "Successfully added ");
+    }
+    else if (type.compare("Saving")==0)
+    {
+        auto account = new SavingsAccount(&_user, 0 , Storage::getInstance().getNextAccountId());
+         _user.addAccount(account);
+         ui->acountList_CB->addItem(account->getAccountName()+ ": " +  QString::number(account->id()) + " - " + QString::number(account->balance()/10) + "UAH");
+         QMessageBox::information(this, "202", "Successfully added ");
+    }
 }

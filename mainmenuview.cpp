@@ -9,6 +9,7 @@
 #include <QLineEdit>
 
 #include "TransactionQueue.h"
+#include "ITransaction.h"
 #include "IAccount.h"
 
 using namespace std;
@@ -19,9 +20,9 @@ MainMenuView::MainMenuView(acountlistview & acount, IAccount* account, QWidget *
     ui(new Ui::MainMenuView),acountList(acount),
     selectedAccount(account)
 {
-    //TODO: change to db name and surname;
     ui->setupUi(this);
-   // ui->recipient_TB->setMaxLength(16);
+    ui->balance_label->setText(QString::number(selectedAccount->balance())+"UAH");
+    ui->acoundId_label->setText(QString::number(selectedAccount->id()));
 }
 
 MainMenuView::~MainMenuView()
@@ -97,4 +98,19 @@ void MainMenuView::on_signOut_B_clicked()
 {
     acountList.show();
     this->close();
+}
+
+void MainMenuView::on_refreshButton_B_clicked()
+{
+    ui->balance_label->setText(QString::number(selectedAccount->balance())+"UAH");
+    const std::vector<const ITransaction*> history =  selectedAccount->transactions();
+
+    for(std::vector<const ITransaction*>::const_iterator itor = history.begin(); itor != history.end(); ++itor)
+    {
+        ui->transactionList_List->addItem(QString("From:")+ (*itor)->getSender().getAccountName()+ " to: "+(*itor)->getReciever().getAccountName()
+                                          + QString::number((*itor)->getAmount())
+                                          + QString("status : ")+QString::number((*itor)->getSuccess()));
+
+    }
+
 }

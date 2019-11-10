@@ -442,117 +442,47 @@ QPushButton:hover{
     </property>
    </widget>
   </widget>
-  <widget class="QGroupBox" name="transHistory">
+  <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
     <rect>
      <x>20</x>
      <y>280</y>
      <width>311</width>
-     <height>201</height>
+     <height>171</height>
     </rect>
    </property>
-   <property name="styleSheet">
-    <string notr="true">QGroupBox {
- border: 1px solid back;
-
-}</string>
-   </property>
    <property name="title">
-    <string/>
+    <string>Add account</string>
    </property>
-   <widget class="QLabel" name="label">
+   <widget class="QComboBox" name="accountList_B">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>10</y>
-      <width>141</width>
-      <height>20</height>
+      <x>20</x>
+      <y>40</y>
+      <width>261</width>
+      <height>31</height>
      </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Agency FB</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>Transaction history</string>
     </property>
    </widget>
-   <widget class="QListWidget" name="transactionList_List">
+   <widget class="QPushButton" name="addAccount_B">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>40</y>
-      <width>221</width>
-      <height>151</height>
+      <x>190</x>
+      <y>80</y>
+      <width>93</width>
+      <height>28</height>
      </rect>
     </property>
-    <property name="palette">
-     <palette>
-      <active>
-       <colorrole role="Base">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>255</red>
-          <green>255</green>
-          <blue>255</blue>
-         </color>
-        </brush>
-       </colorrole>
-       <colorrole role="Window">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>255</red>
-          <green>170</green>
-          <blue>255</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </active>
-      <inactive>
-       <colorrole role="Base">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>255</red>
-          <green>255</green>
-          <blue>255</blue>
-         </color>
-        </brush>
-       </colorrole>
-       <colorrole role="Window">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>255</red>
-          <green>170</green>
-          <blue>255</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </inactive>
-      <disabled>
-       <colorrole role="Base">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>255</red>
-          <green>170</green>
-          <blue>255</blue>
-         </color>
-        </brush>
-       </colorrole>
-       <colorrole role="Window">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>255</red>
-          <green>170</green>
-          <blue>255</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </disabled>
-     </palette>
+    <property name="styleSheet">
+     <string notr="true">QPushButton
+{	border:2px solid #B0C4DE;
+}
+QPushButton:hover{
+	background-color: #b0e0e6;
+}</string>
+    </property>
+    <property name="text">
+     <string>Add</string>
     </property>
    </widget>
   </widget>

@@ -110,6 +110,8 @@ const QString TerminalConnector::processGetTransactionStatusCommand(const QStrin
         case TransactionStatus::Succeeded:
             return TRANSACTION_SUCCEEDED;
     }
+
+    return "";
 }
 
 void TerminalConnector::sendResponse(QSerialPort& port, const QString& response)
