@@ -4,6 +4,7 @@
 #include <QDialog>
 class signinview;
 class MainMenuView;
+class IUser;
 namespace Ui {
 class acountlistview;
 }
@@ -13,7 +14,7 @@ class acountlistview : public QDialog
     Q_OBJECT
 
 public:
-    explicit acountlistview(signinview &, QWidget *parent = nullptr);
+    explicit acountlistview(signinview &,IUser &, QWidget *parent = nullptr);
     ~acountlistview();
 
 private slots:
@@ -24,8 +25,8 @@ private slots:
 private:
     Ui::acountlistview *ui;
     signinview &signInView;
+    IUser &_user;
     MainMenuView *mainMenu;
-
 };
 
 #endif // ACOUNTLISTVIEW_H

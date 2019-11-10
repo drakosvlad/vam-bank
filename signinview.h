@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "mainmenuview.h"
 #include "acountlistview.h"
+class IUser;
 namespace Ui {
 class signinview;
 }
@@ -19,10 +20,10 @@ private slots:
         void on_signIn_B_clicked();
 private:
     Ui::signinview *ui;
-    bool isCorrectCredentials(QString, QString);
+    bool isCorrectCredentials(const std::string&, const std::string&);
     MainMenuView *mainMenu;
     acountlistview * acountList;
-
+    IUser *user;
 };
 
 #endif // SIGNINVIEW_H

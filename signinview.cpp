@@ -1,6 +1,9 @@
 #include "signinview.h"
 #include "ui_signinview.h"
 #include <QMessageBox>
+#include "Storage.h"
+#include "IUser.h"
+
 
 signinview::signinview(QWidget *parent) :
     QDialog(parent),
@@ -16,31 +19,31 @@ signinview::~signinview()
 
 void signinview::on_signIn_B_clicked()
 {
-
-    QString username = ui->username_TB->text();
-    QString password = ui->username_TB->text();
-
-    if(isCorrectCredentials(username,password))
+    const std::string login = ui->username_TB->text().toLocal8Bit().constData();
+    const std::string password =  ui->password_TB->text().toLocal8Bit().constData();
+    user = Storage::getInstance().getUser(login);
+    if(isCorrectCredentials(login,password))
     {
-        QMessageBox::information(this, "Login", "Succesffull sign in for user "+ username);
-        //TODO: click to mainWindow;
-
-        acountList = new acountlistview(*this,this);
+        QMessageBox::information(this, "Login", "Succesffull sign in for user ");
+        acountList = new acountlistview(*this,*user,this);
         acountList->show();
         this->hide();
-
     } else
     {
-        QMessageBox::information(this, "Error", "User "+ username+ " was not found");
+        QMessageBox::information(this, "Error", "User was not found");
+        return;
     }
-
-
 }
 
-bool signinview::isCorrectCredentials(QString username, QString password)
+bool signinview::isCorrectCredentials(const std::string &username, const std::string &password)
 {
-     //TODO: connection to database, check if user exists
-    return true;
+
+ if (user->getLogin().compare(username) != 0)
+     return false;
+ if (user->getPassword().compare(password) != 0)
+     return false;
+
+   return true;
 }
 
 
