@@ -20,9 +20,8 @@ class ICard
 public:
     virtual ~ICard();
     virtual void changePin(const std::array<unsigned char, 4> &) = 0;
+    virtual const std::array<unsigned char, 4> & pin() const = 0;
     virtual bool verifyPin(const std::array<unsigned char, 4> &) const = 0;
-    // Array containing 16 digits
-    virtual const std::array<unsigned char, 16> getCardNumber() const = 0;
     // Array containing 7 bytes
     virtual const std::array<unsigned char, 7> getCardId() const = 0;
     virtual const IAccount* getAccount() const = 0;

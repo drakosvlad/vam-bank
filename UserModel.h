@@ -23,6 +23,7 @@ public:
     const std::string& getFirstName() const override;
     const std::string& getLastName() const override;
     const std::string& getLogin() const override;
+    const std::string& getPassword() const override;
     const IAccount* getAccount(const size_t) const override;
     IAccount* getAccount(const size_t) override;
 

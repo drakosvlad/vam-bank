@@ -3,7 +3,7 @@
 /**
  * @brief Account fee policy
  */
-template<int AcceptFee, int TransferFee, int PaymentFee, bool IsPaymentAccount>
+template<int AcceptFee, int TransferFee, int PaymentFee, bool IsPaymentAccount, short AccountType>
 struct AccountPolicy
 {
     static const bool _isPaymentAccount = IsPaymentAccount;
@@ -21,4 +21,6 @@ struct AccountPolicy
     {
         return amount * AcceptFee / 100;
     }
+
+    static const short _accountType = AccountType;
 };

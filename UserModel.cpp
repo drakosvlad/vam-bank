@@ -1,6 +1,7 @@
 #include "UserModel.h"
 
-UserModel::UserModel(const std::string& firstName,const std::string& lastName,
+UserModel::UserModel(const std::string& firstName,
+                     const std::string& lastName,
             const std::string& password,
             const std::string& login)
     : _firstName(firstName), _lastName(lastName),
@@ -22,6 +23,11 @@ const std::string& UserModel::getLastName() const
 const std::string& UserModel::getLogin() const
 {
     return _login;
+};
+
+const std::string& UserModel::getPassword() const
+{
+    return _password;
 };
 
 void UserModel::setFirstName(const std::string& firstName)

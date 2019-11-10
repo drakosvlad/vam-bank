@@ -1,7 +1,7 @@
 #pragma once
 #include <deque>
 #include <QObject>
-#include <QSemaphore>
+#include <QMutex>
 #include "IAccount.h"
 
 enum TransactionStatus {
@@ -27,7 +27,7 @@ class TransactionQueue : public QObject
     Q_OBJECT
 private:
     TransactionQueue(QObject *parent = nullptr) : QObject(parent) {  }
-    QSemaphore _semaphore;
+    QMutex _semaphore;
     std::deque<TransactionStub> _queue;
 
     static TransactionQueue* _instance;
@@ -42,5 +42,5 @@ public:
     TransactionStatus getTransactionStatus(size_t transactionId);
 
 public slots:
-    void receiveTransaction(IAccount& fromAccount, IAccount& toAccount, int amount, size_t transactionId);
+    void receiveTransaction(IAccount* fromAccount, IAccount* toAccount, int amount, unsigned int transactionId);
 };

@@ -3,7 +3,7 @@
 #include <ostream>
 #include <vector>
 #include <QDebug>
-
+class IUser;
 class ICard;
 class ITransaction;
 
@@ -22,12 +22,12 @@ public:
     virtual int balance() const = 0;
     virtual size_t id() const = 0;
     virtual bool isPaymentAccount() const = 0;
+    virtual short accountType() const =0;
     virtual void addCard(ICard* card) = 0;
-    virtual ICard* getCard(const std::array<unsigned char, 16> & cardNum) = 0;
-    virtual const ICard* getCard(const std::array<unsigned char, 16> & cardNum) const = 0;
+    virtual const IUser* getBoundUser() const =0;
     virtual ICard* getCard(const std::array<unsigned char, 7> & id) = 0;
     virtual const ICard* getCard(const std::array<unsigned char, 7> & id) const = 0;
-    virtual void removeCard(const std::array<unsigned char, 16> & cardNum) = 0;
+    virtual void removeCard(const std::array<unsigned char, 7> & cardNum) = 0;
     virtual const std::vector<ICard*> cards() const = 0;
     virtual const std::vector<const ITransaction*> transactions() const = 0;
     virtual void addTransaction(const ITransaction *) = 0;
@@ -59,3 +59,5 @@ std::ostream& operator<<(std::ostream& out, const TransferError& error);
 
 QDebug operator<<(QDebug debug, const TransferError& error);
 
+Q_DECLARE_METATYPE(IAccount*);
+Q_DECLARE_METATYPE(size_t);

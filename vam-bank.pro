@@ -4,8 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui serialport
-
+QT       += core gui serialport sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = vam-bank
@@ -33,6 +32,7 @@ SOURCES += \
         ITransaction.cpp \
         IUser.cpp \
         Storage.cpp \
+        DatabaseConnect.cpp \
         TerminalConnector.cpp \
         TransactionModel.cpp \
         TransactionQueue.cpp \
@@ -52,6 +52,7 @@ HEADERS += \
         CardModel.h \
         CardProxy.h \
         CreditAccount.h \
+        DatabaseConnect.h \
         DebitAccount.h \
         IAccount.h \
         ICard.h \

@@ -1,4 +1,5 @@
 #include "AccountProxy.h"
+#include "DatabaseConnect.h"
 
 AccountProxy::AccountProxy(IAccount * model) : _model(model)
 {
@@ -37,16 +38,14 @@ bool AccountProxy::isPaymentAccount() const
 {
     return _model->isPaymentAccount();
 }
+short AccountProxy::accountType() const
+{
+    return _model->accountType();
+}
 
 void AccountProxy::addCard(ICard* card)
 {
     _model->addCard(card);
-    Storage::getInstance().commitAccount(_model);
-}
-
-const ICard* AccountProxy::getCard(const std::array<unsigned char, 16> &cardNum) const
-{
-    return new CardProxy(*dynamic_cast<CardModel*>(_model->getCard(cardNum)));
 }
 
 const ICard* AccountProxy::getCard(const std::array<unsigned char, 7> &id) const
@@ -54,17 +53,16 @@ const ICard* AccountProxy::getCard(const std::array<unsigned char, 7> &id) const
     return new CardProxy(*dynamic_cast<CardModel*>(_model->getCard(id)));
 }
 
-ICard* AccountProxy::getCard(const std::array<unsigned char, 16> &cardNum)
-{
-    return new CardProxy(*dynamic_cast<CardModel*>(_model->getCard(cardNum)));
-}
-
 ICard* AccountProxy::getCard(const std::array<unsigned char, 7> &id)
 {
     return new CardProxy(*dynamic_cast<CardModel*>(_model->getCard(id)));
 }
 
-void AccountProxy::removeCard(const std::array<unsigned char, 16> &cardNum)
+const IUser* AccountProxy::getBoundUser() const
+{
+    return _model->getBoundUser();
+};
+void AccountProxy::removeCard(const std::array<unsigned char, 7> &cardNum)
 {
     _model->removeCard(cardNum);
     Storage::getInstance().commitAccount(_model);
@@ -91,7 +89,7 @@ const std::vector<const ITransaction*> AccountProxy::transactions() const
 void AccountProxy::addTransaction(const ITransaction *tr)
 {
     _model->addTransaction(tr);
-    Storage::getInstance().commitAccount(_model);
+    DatabaseConnect::getInstance().addTransaction(tr);
 }
 
 const ITransaction* AccountProxy::getTransaction(const size_t id) const

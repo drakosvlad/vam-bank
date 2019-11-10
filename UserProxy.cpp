@@ -1,6 +1,7 @@
 #include "UserProxy.h"
 #include "Storage.h"
 #include "AccountProxy.h"
+#include "DatabaseConnect.h"
 
 UserProxy::UserProxy(UserModel &model) : _userModel(model)
 {
@@ -30,6 +31,10 @@ const std::string& UserProxy::getLastName() const
 const std::string& UserProxy::getLogin() const
 {
     return _userModel.getLogin();
+}
+const std::string& UserProxy::getPassword() const
+{
+    return _userModel.getPassword();
 }
 
 const IAccount* UserProxy::getAccount(const size_t id) const
@@ -72,13 +77,13 @@ void UserProxy::setLogin(const std::string &login)
 void UserProxy::addAccount(IAccount *account)
 {
     _userModel.addAccount(account);
-    Storage::getInstance().commitUser(this);
+    DatabaseConnect::getInstance().addAccount(account);
 }
 
 void UserProxy::removeAccount(const IAccount* account)
 {
     _userModel.removeAccount(account);
-    Storage::getInstance().commitUser(this);
+    DatabaseConnect::getInstance().removeAccount(account->id());
 }
 
 const std::vector<IAccount*> UserProxy::accounts()
