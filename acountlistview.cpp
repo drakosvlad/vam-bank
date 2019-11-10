@@ -34,8 +34,8 @@ void acountlistview::on_pushButton_clicked()
 
 void acountlistview::on_manageButton_clicked()
 {
-
-    mainMenu = new MainMenuView(*this,this);
+    std::vector<IAccount*> accounts = _user.accounts();
+    mainMenu = new MainMenuView(*this,accounts[ui->acountList_CB->currentIndex()],this);
     mainMenu->show();
     this->hide();
 

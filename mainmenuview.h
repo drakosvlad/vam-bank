@@ -4,7 +4,8 @@
 #include <QDialog>
 
 class signinview;
-class acountlistview;;
+class acountlistview;
+class IAccount;
 
 namespace Ui {
 class MainMenuView;
@@ -15,7 +16,7 @@ class MainMenuView : public QDialog
     Q_OBJECT
 
 public:
-    explicit MainMenuView(acountlistview &, QWidget *parent = nullptr);
+    explicit MainMenuView(acountlistview &, IAccount * acc, QWidget *parent = nullptr);
     ~MainMenuView();
 
 private slots:
@@ -29,6 +30,7 @@ private:
     Ui::MainMenuView *ui;
     bool isCorrectRecipientsCard(const std::string&);
     acountlistview &acountList;
+    IAccount* selectedAccount;
 };
 
 #endif // MAINMENUVIEW_H

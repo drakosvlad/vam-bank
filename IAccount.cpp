@@ -7,7 +7,7 @@ IAccount::~IAccount()
 
 std::ostream& operator<<(std::ostream& out, const IAccount& account)
 {
-    out << "Account #" << account.id() << " with the balance of UAH" << account.balance();
+    out <<account.getAccountName().toStdString()<< "#" << account.id() << " with the balance of UAH" << account.balance();
     return out;
 }
 
