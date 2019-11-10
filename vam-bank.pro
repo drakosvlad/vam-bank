@@ -27,11 +27,13 @@ SOURCES += \
         AccountProxy.cpp \
         CardModel.cpp \
         CardProxy.cpp \
+        CreditAccount.cpp \
         IAccount.cpp \
         ICard.cpp \
         ITransaction.cpp \
         IUser.cpp \
         PayrollProcessor.cpp \
+        SavingsAccount.cpp \
         Storage.cpp \
         DatabaseConnect.cpp \
         TerminalConnector.cpp \

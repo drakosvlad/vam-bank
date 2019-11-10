@@ -56,7 +56,7 @@ void acountlistview::on_addAccount_B_clicked()
     std::string type = ui->accountList_B->currentText().toLocal8Bit().constData();
     if (type.compare("Debit")==0)
     {
-        auto account = new DebitAccount(&_user,0, Storage::getInstance().getNextAccountId());
+        auto account = new DebitAccount(&_user,0, QDate::currentDate(), QDate::currentDate(), 0, Storage::getInstance().getNextAccountId());
         _user.addAccount(account);
         ui->acountList_CB->addItem(account->getAccountName()+ ": " +  QString::number(account->id()) + " - " + QString::number(account->balance()/10) + "UAH");
 
@@ -64,14 +64,14 @@ void acountlistview::on_addAccount_B_clicked()
     }
     else  if (type.compare("Credit")==0)
     {
-        auto account = new CreditAccount(&_user,100000, Storage::getInstance().getNextAccountId());
+        auto account = new CreditAccount(&_user,100000,QDate::currentDate(), QDate::currentDate(), 100000,  Storage::getInstance().getNextAccountId());
          _user.addAccount(account);
          ui->acountList_CB->addItem(account->getAccountName()+ ": " +  QString::number(account->id()) + " - " + QString::number(account->balance()/10) + "UAH");
          QMessageBox::information(this, "202", "Successfully added ");
     }
     else if (type.compare("Saving")==0)
     {
-        auto account = new SavingsAccount(&_user, 0 , Storage::getInstance().getNextAccountId());
+        auto account = new SavingsAccount(&_user, 0 ,QDate::currentDate(), QDate::currentDate(), 0,  Storage::getInstance().getNextAccountId());
          _user.addAccount(account);
          ui->acountList_CB->addItem(account->getAccountName()+ ": " +  QString::number(account->id()) + " - " + QString::number(account->balance()/10) + "UAH");
          QMessageBox::information(this, "202", "Successfully added ");
