@@ -83,7 +83,7 @@ bool MainMenuView::isCorrectRecipientsCard(const std::string &cardNumber)
 void MainMenuView::updateTransactions()
 {
     ui->balance_label->setText(QString::number(selectedAccount->balance() / 100) +"UAH");
-    const std::vector<const ITransaction*> history =  selectedAccount->transactions();
+    const std::vector<const ITransaction*> history = selectedAccount->transactions();
     ui->transactionList_List->clear();
     for(std::vector<const ITransaction*>::const_iterator itor = history.begin(); itor != history.end(); ++itor)
     {
