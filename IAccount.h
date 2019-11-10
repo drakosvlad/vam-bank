@@ -25,6 +25,7 @@ public:
     virtual short accountType() const =0;
     virtual void addCard(ICard* card) = 0;
     virtual const IUser* getBoundUser() const =0;
+    virtual const QString getAccountName() const = 0;
     virtual ICard* getCard(const std::array<unsigned char, 7> & id) = 0;
     virtual const ICard* getCard(const std::array<unsigned char, 7> & id) const = 0;
     virtual void removeCard(const std::array<unsigned char, 7> & cardNum) = 0;

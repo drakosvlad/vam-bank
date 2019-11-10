@@ -8,13 +8,17 @@ acountlistview::acountlistview(signinview & signIn,IUser & user, QWidget *parent
     signInView(signIn),_user(user)
 {
 
-    //std::vector<IAccount*> accounts = _user.accounts();
+    std::vector<IAccount*> accounts = _user.accounts();
 
-    //  ui->acountList_CB->addItem(QString("TEXT"));
+    ui->setupUi(this);
+    for (std::vector<IAccount*>::iterator itor = accounts.begin(); itor != accounts.end(); ++itor)
+    {
+        ui->acountList_CB->addItem(QString::number((*itor)->id()) + " - " + QString::number((*itor)->balance()/10) + "UAH");
+    }
 
-    //ui->setupUi(this);
-    //ui->setName_L->setText("TEXT");
-    //ui->setSurname_L->setText("TEXT");
+
+    ui->setName_L->setText("TEXT");
+    ui->setSurname_L->setText("TEXT");
 }
 
 acountlistview::~acountlistview()
