@@ -1,5 +1,6 @@
 #include "Storage.h"
 
+#include "DatabaseConnect.h"
 #include "DebitAccount.h"
 #include "CardModel.h"
 
@@ -80,21 +81,25 @@ const ITransaction* Storage::getTransaction(const size_t id)
 
 void Storage::commitUser(IUser *u)
 {
-    qDebug() << "User commited: " << (u->getLogin().c_str());
+    DatabaseConnect::getInstance().updateUser(u);
 }
 
-void Storage::commitAccount(IAccount *u)
+void Storage::commitAccount(IAccount *a)
 {
-    qDebug() << "User commited: " << (u->id());
+    DatabaseConnect::getInstance().updateAccount(a);
 }
 
-void Storage::commitCard(ICard *u)
+void Storage::commitCard(ICard *c)
 {
-    qDebug() << "Card commited";
+    DatabaseConnect::getInstance().updateCard(c);
 }
 
 size_t Storage::getNextTransactionId()
 {
-    // TODO
-    return  0;
+    return DatabaseConnect::getInstance().newTransactionId();
+}
+
+size_t Storage::getNextAccountId()
+{
+    return DatabaseConnect::getInstance().newAccountId();
 }

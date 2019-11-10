@@ -34,8 +34,8 @@ DatabaseConnect::DatabaseConnect()
 
     (_qrGetUsers=new QSqlQuery(_db))->prepare("SELECT login, first_name, last_name, password FROM users");
     (_qrGetUserAccounts = new QSqlQuery(_db))->prepare("SELECT id, balance, account_number FROM accounts WHERE user_login = :user_login");
-    (_qrGetAccountCards = new QSqlQuery(_db))->prepare("SELECT id, pin, year, month WHERE id_account = :account_id");
-    (_qrGetAccountTransactions = new QSqlQuery(_db))->prepare("SELECT id, time_sent, time_received, amount, account_to, account_from, success WHERE account_to = :account_id OR account_from = :account_id");
+    (_qrGetAccountCards = new QSqlQuery(_db))->prepare("SELECT id, pin, year, month FROM cards WHERE id_account = :account_id");
+    (_qrGetAccountTransactions = new QSqlQuery(_db))->prepare("SELECT id, time_sent, time_received, amount, account_to, account_from, success FROM transactions WHERE (account_to = :account_id OR account_from = :account_id)");
 }
 
 DatabaseConnect::~DatabaseConnect()
@@ -143,6 +143,8 @@ std::vector<const ITransaction*> DatabaseConnect::getAccountTransactions(const s
                                                 _qrGetAccountTransactions->value(1).toDateTime(),
                                                 _qrGetAccountTransactions->value(2).toDateTime());
 
+        if (transaction->getId() > _maxTransactionId)
+            _maxTransactionId = transaction->getId();
         res.push_back(transaction);
     }
 
@@ -160,6 +162,10 @@ std::vector<IAccount*> DatabaseConnect::getUserAccounts(const IUser* user)
         int accountTypeNumber = _qrGetUserAccounts->value(2).toInt();
         int balance = _qrGetUserAccounts->value(1).toInt();
         unsigned int id = _qrGetUserAccounts->value(0).toUInt();
+
+        if (id > _maxAccountId)
+            _maxAccountId = id;
+
         switch (accountTypeNumber) {
             case 0:
                 res.push_back(new DebitAccount(user, balance, id));

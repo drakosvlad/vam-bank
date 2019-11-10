@@ -1,4 +1,5 @@
 #include "AccountProxy.h"
+#include "DatabaseConnect.h"
 
 AccountProxy::AccountProxy(IAccount * model) : _model(model)
 {
@@ -41,7 +42,6 @@ bool AccountProxy::isPaymentAccount() const
 void AccountProxy::addCard(ICard* card)
 {
     _model->addCard(card);
-    Storage::getInstance().commitAccount(_model);
 }
 
 const ICard* AccountProxy::getCard(const std::array<unsigned char, 7> &id) const
@@ -81,7 +81,7 @@ const std::vector<const ITransaction*> AccountProxy::transactions() const
 void AccountProxy::addTransaction(const ITransaction *tr)
 {
     _model->addTransaction(tr);
-    Storage::getInstance().commitAccount(_model);
+    DatabaseConnect::getInstance().addTransaction(tr);
 }
 
 const ITransaction* AccountProxy::getTransaction(const size_t id) const

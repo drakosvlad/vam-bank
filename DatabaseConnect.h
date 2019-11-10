@@ -35,6 +35,9 @@ private:
     QSqlQuery* _qrGetAccountTransactions;
     QSqlQuery* _qrGetUsers;
 
+    size_t _maxAccountId = 0;
+    size_t _maxTransactionId = 0;
+
 public:
     static DatabaseConnect& getInstance();
     DatabaseConnect(const DatabaseConnect& )=delete;
@@ -56,6 +59,9 @@ public:
     std::vector<const ITransaction*> getAccountTransactions(const size_t);
     std::vector<IAccount*> getUserAccounts(const IUser* user);
     std::vector<ICard*> getAccountCards(const IAccount* account);
+
+    size_t newAccountId() { return ++_maxAccountId; }
+    size_t newTransactionId() { return ++_maxTransactionId; }
 };
 
 #endif // DATABASECONNECT_H
