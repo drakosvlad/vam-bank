@@ -24,7 +24,7 @@ void signinview::on_signIn_B_clicked()
     user = Storage::getInstance().getUser(login);
     if(isCorrectCredentials(login,password))
     {
-        QMessageBox::information(this, "Login", "Succesffull sign in for user ");
+        QMessageBox::information(this, "Login", "Successful sign in for user ");
         acountList = new acountlistview(*this,*user,this);
         acountList->show();
         this->hide();
