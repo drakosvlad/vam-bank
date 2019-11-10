@@ -8,7 +8,12 @@ AccountProxy::AccountProxy(IAccount * model) : _model(model)
 
 AccountProxy::~AccountProxy()
 {
+    for (auto p : _toDeleteCards)
+    {
+        delete p;
+    }
 
+    _toDeleteCards.clear();
 }
 
 void AccountProxy::acceptTransfer (const int amount)
@@ -50,12 +55,25 @@ void AccountProxy::addCard(ICard* card)
 
 const ICard* AccountProxy::getCard(const std::array<unsigned char, 7> &id) const
 {
-    return new CardProxy(*dynamic_cast<CardModel*>(_model->getCard(id)));
+    return const_cast<ICard*>(const_cast<const AccountProxy*>(this)->getCard(id));
+//    auto card = new CardProxy(*dynamic_cast<CardModel*>(_model->getCard(id)));
+//    if (card !=nullptr)
+//    {
+//        _toDeleteCards.push_back(card);
+//        return _toDeleteCards.back();
+//    }
+//    return nullptr;
 }
 
 ICard* AccountProxy::getCard(const std::array<unsigned char, 7> &id)
 {
-    return new CardProxy(*dynamic_cast<CardModel*>(_model->getCard(id)));
+    auto card = new CardProxy(*dynamic_cast<CardModel*>(_model->getCard(id)));
+    if (card !=nullptr)
+    {
+        _toDeleteCards.push_back(card);
+        return _toDeleteCards.back();
+    }
+    return nullptr;
 }
 
 const IUser* AccountProxy::getBoundUser() const
@@ -75,7 +93,8 @@ const std::vector<ICard*> AccountProxy::cards() const
     std::vector<ICard*> modelCards = _model->cards();
     for (std::vector<ICard*>::iterator itor = modelCards.begin(); itor != modelCards.end(); itor++)
     {
-        proxyCards.push_back(new CardProxy(*dynamic_cast<CardModel*>(*itor)));
+        _toDeleteCards.push_back(new CardProxy(*dynamic_cast<CardModel*>(*itor)));
+        proxyCards.push_back(_toDeleteCards.back());
     }
 
     return proxyCards;

@@ -1,5 +1,6 @@
 #pragma once
 #include "UserModel.h"
+class AccountProxy;
 
 /**
  * @brief Proxy class for User model
@@ -8,7 +9,7 @@ class UserProxy: public IUser
 {
 private:
     UserModel& _userModel;
-
+    mutable std::vector<AccountProxy*> _toDeleteAccounts;
 public:
     UserProxy(UserModel &);
     ~UserProxy() override;
