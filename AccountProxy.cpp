@@ -81,6 +81,10 @@ const std::vector<ICard*> AccountProxy::cards() const
     return proxyCards;
 }
 
+const QString AccountProxy::getAccountName() const
+{
+    return _model->getAccountName();
+};
 const std::vector<const ITransaction*> AccountProxy::transactions() const
 {
     return _model->transactions();
