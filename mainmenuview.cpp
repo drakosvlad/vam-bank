@@ -64,7 +64,7 @@ void MainMenuView::on_transfer_B_clicked()
     TransactionQueue::getInstance().receiveTransaction(selectedAccount,
                                                        toAccount,
                                                        amount * 100,
-                                                       Storage::getNextAccountId());
+                                                       Storage::getNextTransactionId());
 
     ui->recipient_TB->setText("");
     ui->TrnsfSum_TB->setText("");

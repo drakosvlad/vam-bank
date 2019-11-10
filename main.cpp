@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
-    Storage::getInstance();
+    Storage::getInstance().init();
 
     TransactionQueueProcessor pr;
     pr.start();
