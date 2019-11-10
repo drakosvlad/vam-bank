@@ -35,5 +35,7 @@ public:
     static size_t getNextTransactionId();
     static size_t getNextAccountId();
 
+    void init();
+
     friend class PayrollProcessor;
 };

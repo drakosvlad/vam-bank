@@ -9,32 +9,45 @@ Storage* Storage::_instance = nullptr;
 
 Storage::Storage()
 {
+
+}
+
+void Storage::init()
+{
     std::vector<IUser*> models = DatabaseConnect::getInstance().getUsers();
     UserProxy* admin = new UserProxy(*new UserModel("Admin", "Admin", "admin", "admin"));
     _users.push_back(admin);
     admin->addAccount(new PayrollAccount(admin, 0, QDate::currentDate(), QDate::currentDate(), 0, 0));
 
-    for (std::vector<IUser*>::iterator itor = models.begin(); itor != models.end(); itor++)
+    for (IUser* user : models)
     {
-        std::vector<IAccount*> accounts = DatabaseConnect::getInstance().getUserAccounts(*itor);
-        for (std::vector<IAccount*>::iterator aitor = accounts.begin(); aitor != accounts.end(); aitor++)
+        _users.push_back(new UserProxy(*dynamic_cast<UserModel*>(user)));
+    }
+    for (IUser* user : models)
+    {
+        std::vector<IAccount*> accounts = DatabaseConnect::getInstance().getUserAccounts(user);
+        for (IAccount* account : accounts)
         {
-            std::vector<const ITransaction*> transactions = DatabaseConnect::getInstance().getAccountTransactions((*aitor)->id());
-            for (std::vector<const ITransaction*>::const_iterator titor = transactions.begin(); titor != transactions.end(); titor++)
-            {
-                (*aitor)->addTransaction(*titor);
-            }
-
-            std::vector<ICard*> cards = DatabaseConnect::getInstance().getAccountCards(*aitor);
-            for (std::vector<ICard*>::iterator citor = cards.begin(); citor != cards.end(); citor++)
-            {
-                (*aitor)->addCard(*citor);
-            }
-
-            (*itor)->addAccount(*aitor);
+            user->addAccount(account);
         }
+    }
+    for (IUser* user : models)
+    {
+        std::vector<IAccount*> accounts = user->accounts();
+        for (IAccount* account : accounts)
+        {
+            std::vector<const ITransaction*> transactions = DatabaseConnect::getInstance().getAccountTransactions(account->id());
+            for (const ITransaction* transaction : transactions)
+            {
+                account->addTransaction(transaction);
+            }
 
-        _users.push_back(new UserProxy(*dynamic_cast<UserModel*>(*itor)));
+            std::vector<ICard*> cards = DatabaseConnect::getInstance().getAccountCards(account);
+            for (ICard* card : cards)
+            {
+                account->addCard(card);
+            }
+        }
     }
 }
 
