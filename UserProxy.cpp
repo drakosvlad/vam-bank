@@ -35,12 +35,14 @@ const std::string& UserProxy::getLogin() const
 const IAccount* UserProxy::getAccount(const size_t id) const
 {
     // TODO delete
-    return new AccountProxy(_userModel.getAccount(id));
+    auto account = _userModel.getAccount(id);
+    return account == nullptr ? nullptr: new AccountProxy(account);
 }
 
 IAccount* UserProxy::getAccount(const size_t id)
 {
-    return new AccountProxy(_userModel.getAccount(id));
+    auto account = _userModel.getAccount(id);
+    return account == nullptr ? nullptr: new AccountProxy(account);
 }
 
 void UserProxy::setFirstName(const std::string &name)
@@ -79,7 +81,7 @@ void UserProxy::removeAccount(const IAccount* account)
     Storage::getInstance().commitUser(this);
 }
 
-const std::vector<IAccount*>& UserProxy::accounts()
+const std::vector<IAccount*> UserProxy::accounts()
 {
     std::vector<IAccount*> proxyAccounts;
     std::vector<IAccount*> modelAccounts = _userModel.accounts();

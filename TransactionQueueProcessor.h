@@ -9,7 +9,6 @@ class TransactionQueueProcessor : public QThread
 {
     Q_OBJECT
 private:
-    TransactionQueueProcessor();
     void run() override;
 public:
     TransactionQueueProcessor(QObject* parent = nullptr);

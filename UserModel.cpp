@@ -81,7 +81,7 @@ bool UserModel::verifyPassword(const std::string &password) const
     return password == _password;
 }
 
-const std::vector<IAccount*>& UserModel::accounts()
+const std::vector<IAccount*> UserModel::accounts()
 {
     return _accounts;
 }

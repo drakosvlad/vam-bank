@@ -34,6 +34,6 @@ public:
     bool verifyPassword(const std::string&) const override;
     void addAccount(IAccount*) override;
     void removeAccount(const IAccount *) override;
-    const std::vector<IAccount*>& accounts() override;
+    const std::vector<IAccount*> accounts() override;
 
 };

@@ -26,7 +26,7 @@ class TransactionQueue : public QObject
 {
     Q_OBJECT
 private:
-    TransactionQueue() {  }
+    TransactionQueue(QObject *parent = nullptr) : QObject(parent) {  }
     QSemaphore _semaphore;
     std::deque<const TransactionStub> _queue;
 
