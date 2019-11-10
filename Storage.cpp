@@ -9,13 +9,13 @@ Storage* Storage::_instance = nullptr;
 Storage::Storage()
 {
     // TEMP SEED
-    /*auto user = new UserModel("Lolkek", "Cheburek", "123456", "lolkek");
+    auto user = new UserModel("Lolkek", "Cheburek", "123456", "lolkek");
     auto account1 = new DebitAccount(user, 1000, 123);
     auto account2 = new DebitAccount(user, 2000, 124);
     user->addAccount(account1);
     user->addAccount(account2);
 
-    _users.push_back(new UserProxy(*user));*/
+    _users.push_back(new UserProxy(*user));
 
     std::vector<IUser*> models = DatabaseConnect::getInstance().getUsers();
 

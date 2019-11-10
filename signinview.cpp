@@ -1,53 +1,50 @@
-/*#include "signinview.h"
+#include "signinview.h"
 #include "ui_signinview.h"
 #include <QMessageBox>
+#include "Storage.h"
+#include "IUser.h"
 
-SignInVIew::SignInVIew(QWidget *parent) :
+
+signinview::signinview(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::SignInVIew)
+    ui(new Ui::signinview)
 {
     ui->setupUi(this);
-     ui->signIn_group->hide();
 }
 
-SignInVIew::~SignInVIew()
+signinview::~signinview()
 {
     delete ui;
 }
 
-void SignInVIew::on_pushButton_clicked()
+void signinview::on_signIn_B_clicked()
 {
-
-}
-
-void SignInVIew::on_signIn_B_clicked()
-{
-
-    QString username = ui->username_TB->text();
-    QString password = ui->username_TB->text();
-    if(isCorrectCredentials(username,password))
+    const std::string login = ui->username_TB->text().toLocal8Bit().constData();
+    const std::string password =  ui->password_TB->text().toLocal8Bit().constData();
+    user = Storage::getInstance().getUser(login);
+    if(isCorrectCredentials(login,password))
     {
-        QMessageBox::information(this, "Login", "Succesffull sign in for user "+ username);
-        //TODO: click to mainWindow;
-        ui->signIn_group->hide();
-
+        QMessageBox::information(this, "Login", "Succesffull sign in for user ");
+        acountList = new acountlistview(*this,*user,this);
+        acountList->show();
+        this->hide();
     } else
     {
-        QMessageBox::information(this, "Error", "User "+ username+ " was not found");
+        QMessageBox::information(this, "Error", "User was not found");
+        return;
     }
-
-
 }
 
-bool SignInVIew::isCorrectCredentials(QString username, QString password)
+bool signinview::isCorrectCredentials(const std::string &username, const std::string &password)
 {
-     //TODO: connection to database, check if user exists
-    return true;
+
+ if (user->getLogin().compare(username) != 0)
+     return false;
+ if (user->getPassword().compare(password) != 0)
+     return false;
+
+   return true;
 }
 
-void SignInVIew::on_signUP_B_clicked()
-{
-    //TODO: create new Account window
-    //TODO: connection to database.
-}
-*/
+
+
