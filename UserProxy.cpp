@@ -45,13 +45,6 @@ const std::string& UserProxy::getPassword() const
 const IAccount* UserProxy::getAccount(const size_t id) const
 {
     return const_cast<IAccount*>(const_cast<const UserProxy*>(this)->getAccount(id));
-//    auto account = _userModel.getAccount(id);
-//    if (account!=nullptr){
-//        _toDeleteAccounts.push_back(new AccountProxy(account));
-//        return _toDeleteAccounts.back();
-//    }
-//    return nullptr;
-
 }
 
 IAccount* UserProxy::getAccount(const size_t id)
