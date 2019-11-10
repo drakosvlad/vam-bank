@@ -23,6 +23,7 @@ public:
     short accountType() const override;
     const IUser* getBoundUser() const override;
     void addCard(ICard* card) override;
+    const QString getAccountName() const override;
     ICard* getCard(const std::array<unsigned char, 7> & id) override;
     const ICard* getCard(const std::array<unsigned char, 7> & id) const override;
     void removeCard(const std::array<unsigned char, 7> & cardNum) override;

@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <ostream>
+#include <QString>
 #include "IAccount.h"
 #include "IUser.h"
 #include "ICard.h"
@@ -29,6 +30,7 @@ public:
     void acceptTransfer(const int amount) override;
     int balance() const override { return this->_balance; }
     size_t id() const override { return this->_id; }
+    const QString getAccountName() const override;
     bool isPaymentAccount() const override { return Policy::_isPaymentAccount; }
     short accountType() const override {return Policy::_accountType;}
     void addCard(ICard* card) override;
@@ -75,6 +77,23 @@ template <typename Policy>
 void AccountModel<Policy>::addCard(ICard* card)
 {
     this->_cards.push_back(card);
+}
+
+template <typename Policy>
+const QString AccountModel<Policy>::getAccountName() const
+{
+    switch (_id) {
+    case 0:
+        return QString("Debit account");
+    case 1:
+        return QString("Credit account");
+    case 2:
+        return QString("Saving account");
+    case 3:
+        return QString("Payment account");
+    default:
+        return QString("Account");
+    }
 }
 
 template <typename Policy>

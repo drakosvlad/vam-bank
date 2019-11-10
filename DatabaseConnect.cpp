@@ -18,7 +18,7 @@
 #include "CardModel.h"
 
 
-QString DatabaseConnect::dbHost = QString("");
+QString DatabaseConnect::dbHost = QString("localhost");
 QString DatabaseConnect::dbName = QString("vam_fant");
 QString DatabaseConnect::dbPass = QString("rootroot");
 QString DatabaseConnect::dbUser = QString("root");
