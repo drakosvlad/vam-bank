@@ -32,7 +32,6 @@ SOURCES += \
         ITransaction.cpp \
         IUser.cpp \
         Storage.cpp \
-        DatabaseConfig.cpp \
         DatabaseConnect.cpp \
         TerminalConnector.cpp \
         TransactionModel.cpp \

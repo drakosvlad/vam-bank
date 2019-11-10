@@ -1,6 +1,7 @@
 #include "UserModel.h"
 
-UserModel::UserModel(const std::string& firstName,const std::string& lastName,
+UserModel::UserModel(const std::string& firstName,
+                     const std::string& lastName,
             const std::string& password,
             const std::string& login)
     : _firstName(firstName), _lastName(lastName),

@@ -33,4 +33,5 @@ public:
     void commitCard(ICard *);
 
     static size_t getNextTransactionId();
+    static size_t getNextAccountId();
 };

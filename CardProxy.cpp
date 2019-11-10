@@ -1,9 +1,10 @@
 #include "CardProxy.h"
+#include "Storage.h"
 
 void CardProxy::changePin(const std::array<unsigned char, 4> &pin)
 {
-    // TODO db update
     _model.changePin(pin);
+    Storage::getInstance().commitCard(&_model);
 }
 
 bool CardProxy::verifyPin(const std::array<unsigned char, 4> &pin) const
@@ -26,3 +27,7 @@ const DueDate CardProxy::getDueDate() const
     return _model.getDueDate();
 }
 
+const std::array<unsigned char, 4> & CardProxy::pin() const
+{
+    return _model.pin();
+}

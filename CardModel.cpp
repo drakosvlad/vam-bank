@@ -43,3 +43,8 @@ const DueDate CardModel::getDueDate() const
 {
     return _dueDate;
 }
+
+const std::array<unsigned char, 4> & CardModel::pin() const
+{
+    return _pin;
+}

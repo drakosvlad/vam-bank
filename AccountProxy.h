@@ -20,6 +20,8 @@ public:
     int balance() const override;
     size_t id() const override;
     bool isPaymentAccount() const override;
+    short accountType() const override;
+    const IUser* getBoundUser() const override;
     void addCard(ICard* card) override;
     ICard* getCard(const std::array<unsigned char, 7> & id) override;
     const ICard* getCard(const std::array<unsigned char, 7> & id) const override;

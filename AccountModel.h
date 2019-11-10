@@ -35,7 +35,7 @@ public:
 
     ICard* getCard(const std::array<unsigned char, 7> & id) override;
     const ICard* getCard(const std::array<unsigned char, 7> & id) const override;
-    const IUser* getBoundUser() const override {return _owner;}
+    const IUser* getBoundUser() const override {return &_owner;}
     void removeCard(const std::array<unsigned char, 7> & cardNum) override;
     const std::vector<ICard*> cards() const override;
     const std::vector<const ITransaction*> transactions() const override;
