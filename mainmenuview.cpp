@@ -87,10 +87,10 @@ void MainMenuView::updateTransactions()
     ui->transactionList_List->clear();
     for(std::vector<const ITransaction*>::const_iterator itor = history.begin(); itor != history.end(); ++itor)
     {
-        ui->transactionList_List->addItem(QString("From:")+ (*itor)->getSender().getAccountName()+ " to: "+(*itor)->getReciever().getAccountName()
-                                          +", sum: "+  QString::number((*itor)->getAmount())
-                                          + QString(", status : ")+QString::number((*itor)->getSuccess()));
-
+        ui->transactionList_List->addItem(QString("%3 UAH from %1 to %2 - %4").arg((*itor)->getSender().getAccountName(),
+                                                                                   (*itor)->getReciever().getAccountName(),
+                                                                                   QString::number((*itor)->getAmount() / 100),
+                                                                                   ((*itor)->getSuccess() ? "succeeded" : "failed")));
     }
 
 }

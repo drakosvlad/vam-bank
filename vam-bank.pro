@@ -32,6 +32,7 @@ SOURCES += \
         ICard.cpp \
         ITransaction.cpp \
         IUser.cpp \
+        LocalConfig.cpp \
         PayrollProcessor.cpp \
         SavingsAccount.cpp \
         Storage.cpp \
@@ -61,6 +62,7 @@ HEADERS += \
         ICard.h \
         ITransaction.h \
         IUser.h \
+        LocalConfig.h \
         PayrollAccount.h \
         PayrollProcessor.h \
         SavingsAccount.h \

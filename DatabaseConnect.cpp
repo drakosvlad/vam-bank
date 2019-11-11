@@ -16,14 +16,15 @@
 #include "CreditAccount.h"
 #include "SavingsAccount.h"
 #include "CardModel.h"
+#include "LocalConfig.h"
 
 #include <QSqlError>
 
 
-QString DatabaseConnect::dbHost = QString("localhost");
-QString DatabaseConnect::dbName = QString("vam_fant");
-QString DatabaseConnect::dbPass = QString("rootroot");
-QString DatabaseConnect::dbUser = QString("root");
+QString DatabaseConnect::dbHost = LocalConfig::DB_HOST;
+QString DatabaseConnect::dbName = LocalConfig::DB_NAME;
+QString DatabaseConnect::dbPass = LocalConfig::DB_PASS;
+QString DatabaseConnect::dbUser = LocalConfig::DB_USER;
 
 
 DatabaseConnect* DatabaseConnect::_instance= nullptr;
@@ -35,23 +36,26 @@ DatabaseConnect::DatabaseConnect()
     _db.setDatabaseName(DatabaseConnect::dbName);
     _db.setUserName(DatabaseConnect::dbUser);
     _db.setPassword(DatabaseConnect::dbPass);
-    _db.open();
 
-    (_qrAddUser = new QSqlQuery(_db))->prepare("INSERT INTO users (login, first_name, last_name, password) VALUES (:login, :first_name, :last_name, :password)");
-    (_qrAddAccount = new QSqlQuery(_db))->prepare("INSERT INTO accounts (id, balance, account_number, user_login) VALUES (:id, :balance, :account_number, :user_login)");
-    (_qrAddTransaction=new QSqlQuery(_db))->prepare("INSERT IGNORE INTO transactions (id, time_sent, time_recieved, amount, account_from, account_to, success) VALUES (:id, :time_sent, :time_received, :amount, :account_from, :account_to, :success)");
+    if (_db.open())
+    {
+        qDebug() << "Database opened";
+        (_qrAddUser = new QSqlQuery(_db))->prepare("INSERT INTO users (login, first_name, last_name, password) VALUES (:login, :first_name, :last_name, :password)");
+        (_qrAddAccount = new QSqlQuery(_db))->prepare("INSERT INTO accounts (id, balance, account_number, user_login) VALUES (:id, :balance, :account_number, :user_login)");
+        (_qrAddTransaction=new QSqlQuery(_db))->prepare("INSERT IGNORE INTO transactions (id, time_sent, time_recieved, amount, account_from, account_to, success) VALUES (:id, :time_sent, :time_received, :amount, :account_from, :account_to, :success)");
 
-    (_qrRmUser = new QSqlQuery(_db))->prepare("DELETE FROM users WHERE login=:login");
-    (_qrRmAccount = new QSqlQuery(_db))->prepare("DELETE FROM accounts WHERE id=:id");
+        (_qrRmUser = new QSqlQuery(_db))->prepare("DELETE FROM users WHERE login=:login");
+        (_qrRmAccount = new QSqlQuery(_db))->prepare("DELETE FROM accounts WHERE id=:id");
 
-    (_qrUpdUser = new QSqlQuery(_db))->prepare("UPDATE users SET password = :password WHERE login = :login");
-    (_qrUpdAccount = new QSqlQuery(_db))->prepare("UPDATE accounts SET balance = :balance, payroll_date = :payroll_date WHERE id = :id");
-    (_qrUpdCard = new QSqlQuery(_db))->prepare("UPDATE cards SET pin = :pin WHERE card_id = :id");
+        (_qrUpdUser = new QSqlQuery(_db))->prepare("UPDATE users SET password = :password WHERE login = :login");
+        (_qrUpdAccount = new QSqlQuery(_db))->prepare("UPDATE accounts SET balance = :balance, payroll_date = :payroll_date WHERE id = :id");
+        (_qrUpdCard = new QSqlQuery(_db))->prepare("UPDATE cards SET pin = :pin WHERE card_id = :id");
 
-    (_qrGetUsers=new QSqlQuery(_db))->prepare("SELECT login, first_name, last_name, password FROM users");
-    (_qrGetUserAccounts = new QSqlQuery(_db))->prepare("SELECT id, balance, account_number, creation_date, payroll_date, credit_limit FROM accounts WHERE user_login = :user_login");
-    (_qrGetAccountCards = new QSqlQuery(_db))->prepare("SELECT id, pin, year, month FROM cards WHERE id_account = :account_id");
-    (_qrGetAccountTransactions = new QSqlQuery(_db))->prepare("SELECT id, time_sent, time_recieved, amount, account_to, account_from, success FROM transactions WHERE (account_to = :account_id OR account_from = :account_id)");
+        (_qrGetUsers=new QSqlQuery(_db))->prepare("SELECT login, first_name, last_name, password FROM users");
+        (_qrGetUserAccounts = new QSqlQuery(_db))->prepare("SELECT id, balance, account_number, creation_date, payroll_date, credit_limit FROM accounts WHERE user_login = :user_login");
+        (_qrGetAccountCards = new QSqlQuery(_db))->prepare("SELECT id, pin, year, month FROM cards WHERE id_account = :account_id");
+        (_qrGetAccountTransactions = new QSqlQuery(_db))->prepare("SELECT id, time_sent, time_recieved, amount, account_to, account_from, success FROM transactions WHERE (account_to = :account_id OR account_from = :account_id)");
+    }
 }
 
 DatabaseConnect::~DatabaseConnect()

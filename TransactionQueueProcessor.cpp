@@ -34,7 +34,10 @@ void TransactionQueueProcessor::run()
         }
         catch (const TransferError& error)
         {
-            qDebug() << error;
+            qDebug() << QString("Error transferring %1 UAH from %2 to %3:").arg(QString::number(transaction._amount / 100),
+                                                                        QString::number(transaction._from.id()),
+                                                                        QString::number(transaction._to.id()))
+                     << error;
             success = false;
         }
 
@@ -49,7 +52,7 @@ void TransactionQueueProcessor::run()
         transaction._from.addTransaction(transactionModel);
         transaction._to.addTransaction(transactionModel);
         if (success)
-            qDebug() << QString("Transferred %1 UAH from %2 to %3").arg(QString::number(transaction._amount),
+            qDebug() << QString("Transferred %1 UAH from %2 to %3").arg(QString::number(transaction._amount / 100),
                                                                         QString::number(transaction._from.id()),
                                                                         QString::number(transaction._to.id()));
     }

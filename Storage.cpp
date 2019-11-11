@@ -14,6 +14,7 @@ Storage::Storage()
 
 void Storage::init()
 {
+    qDebug() << "Database loading";
     std::vector<IUser*> models = DatabaseConnect::getInstance().getUsers();
     UserProxy* admin = new UserProxy(*new UserModel("Admin", "Admin", "admin", "admin"));
     _users.push_back(admin);
@@ -49,6 +50,7 @@ void Storage::init()
             }
         }
     }
+    qDebug() << "Database loaded";
 }
 
 Storage& Storage::getInstance()
