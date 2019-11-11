@@ -1,8 +1,8 @@
 #pragma once
 
 #include <string>
-
 class IAccount;
+#include <vector>
 
 /**
  * @brief Bank User interface
