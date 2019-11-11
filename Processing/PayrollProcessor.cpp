@@ -41,7 +41,9 @@ void PayrollProcessor::run()
             }
         }
 
-        sleep(3600 * 24);
+        // Sleeping for 12 hours with 1 second intervals, in order to exit thread correctly on application close
+        for (size_t i = 0; i < 3600 * 12 && _go; ++i)
+            sleep(1);
     }
 }
 
