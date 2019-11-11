@@ -55,7 +55,7 @@ public:
 
 template <typename Policy>
 AccountModel<Policy>::AccountModel(const IUser* owner, int balance, const QDate& creationDate, const QDate& payrollDate, int creditLimit, size_t id)
-    : _owner(*owner),_id(id), _balance(balance), _creationDate(creationDate), _payrollDate(payrollDate), _creditLimit(creditLimit)  {  }
+    : _owner(*owner),_balance(balance), _id(id), _creationDate(creationDate), _payrollDate(payrollDate), _creditLimit(creditLimit)  {  }
 
 template <typename Policy>
 void AccountModel<Policy>::acceptTransfer(const int amount)
