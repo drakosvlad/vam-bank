@@ -1,4 +1,4 @@
 *.user*
 .DS_Store
 **/.DS_Store/
-Database/LocalConfig.*
+Database/LocalConfig.cpp
