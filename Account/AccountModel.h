@@ -76,8 +76,8 @@ void AccountModel<Policy>::transfer(IAccount& acc, const int amount)
         return;
 
     int actualAmount = amount + (acc.isPaymentAccount() ?
-                Policy::transferFee(amount) :
-                Policy::paymentFee(amount));
+                Policy::paymentFee(amount) :
+                Policy::transferFee(amount));
 
     if (actualAmount > this->_balance)
         throw TransferError("Dayte denyak");
@@ -95,19 +95,20 @@ void AccountModel<Policy>::addCard(ICard* card)
 template <typename Policy>
 const QString AccountModel<Policy>::getAccountName() const
 {
+    QString tpl = QString("%1 (%2)").arg(QString::number(_id));
     switch (accountType()) {
     case 0:
-        return QString("Debit account");
+        return tpl.arg("Debit");
     case 1:
-        return QString("Credit account");
+        return tpl.arg("Credit");
     case 2:
-        return QString("Saving account");
+        return tpl.arg("Saving");
     case 3:
-        return QString("Payment account");
+        return tpl.arg("Payment");
     case 4:
-        return QString("Maintenance account");
+        return tpl.arg("Maintenance");
     default:
-        return QString("Account");
+        return tpl.arg("Account");
     }
 }
 

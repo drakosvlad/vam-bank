@@ -3,7 +3,7 @@
 #include "AccountModel.h"
 #include "AccountPolicy.h"
 
-typedef AccountPolicy<5, 0, 0, false, 1> CreditAccountPolicy;
+typedef AccountPolicy<0, 5, 0, false, 1> CreditAccountPolicy;
 typedef AccountModel<CreditAccountPolicy> CreditAccount;
 
 template<>

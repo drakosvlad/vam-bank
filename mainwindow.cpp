@@ -16,7 +16,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_start_B_clicked()
 {
-    this->hide();
+    //this->hide();
     signInView = new SignInView(this);
     signInView->show();
 }

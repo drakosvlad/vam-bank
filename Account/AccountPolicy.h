@@ -9,17 +9,17 @@ struct AccountPolicy
     static const bool _isPaymentAccount = IsPaymentAccount;
 
     static int transferFee(int amount) {
-        return amount * TransferFee / 100;
+        return (amount * TransferFee) / 100;
     }
 
     static int paymentFee(int amount)
     {
-        return amount * PaymentFee / 100;
+        return (amount * PaymentFee) / 100;
     }
 
     static int acceptFee(int amount)
     {
-        return amount * AcceptFee / 100;
+        return (amount * AcceptFee) / 100;
     }
 
     static const short _accountType = AccountType;
