@@ -1,3 +1,4 @@
 *.user*
-.DS_Store/
-LocalConfig.*
+.DS_Store
+**/.DS_Store/
+Database/LocalConfig.*

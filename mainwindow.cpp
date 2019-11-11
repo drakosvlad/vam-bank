@@ -7,7 +7,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
 }
 
 MainWindow::~MainWindow()
@@ -18,8 +17,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_start_B_clicked()
 {
     this->hide();
-   // ui->congratulation_GB->hide();
-    signInView=new signinview(this);
+    signInView = new SignInView(this);
     signInView->show();
 }
 

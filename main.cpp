@@ -2,9 +2,9 @@
 #include <QApplication>
 #include <QDebug>
 
-#include "Storage.h"
-#include "TransactionQueueProcessor.h"
-#include "PayrollProcessor.h"
+#include "Database/Storage.h"
+#include "Processing/TransactionQueueProcessor.h"
+#include "Processing/PayrollProcessor.h"
 
 int main(int argc, char *argv[])
 {

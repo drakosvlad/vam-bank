@@ -1,23 +1,24 @@
 #include "signinview.h"
 #include "ui_signinview.h"
+
 #include <QMessageBox>
-#include "Storage.h"
-#include "IUser.h"
+#include "Database/Storage.h"
+#include "User/IUser.h"
 
 
-signinview::signinview(QWidget *parent) :
+SignInView::SignInView(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::signinview)
+    ui(new Ui::SignInView)
 {
     ui->setupUi(this);
 }
 
-signinview::~signinview()
+SignInView::~SignInView()
 {
     delete ui;
 }
 
-void signinview::on_signIn_B_clicked()
+void SignInView::on_signIn_B_clicked()
 {
     const std::string login = ui->username_TB->text().toLocal8Bit().constData();
     const std::string password =  ui->password_TB->text().toLocal8Bit().constData();
@@ -25,7 +26,7 @@ void signinview::on_signIn_B_clicked()
     if (user != nullptr && isCorrectCredentials(login,password))
     {
         QMessageBox::information(this, "Login", "Successful sign in for user ");
-        acountList = new acountlistview(*this,*user,this);
+        acountList = new MainPageView(*this,*user,this);
         acountList->show();
         this->hide();
     }
@@ -36,7 +37,7 @@ void signinview::on_signIn_B_clicked()
     }
 }
 
-bool signinview::isCorrectCredentials(const std::string &username, const std::string &password)
+bool SignInView::isCorrectCredentials(const std::string &username, const std::string &password)
 {
 
     if (user->getLogin().compare(username) != 0)

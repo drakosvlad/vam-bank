@@ -24,65 +24,65 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-        AccountProxy.cpp \
-        CardModel.cpp \
-        CardProxy.cpp \
-        CreditAccount.cpp \
-        IAccount.cpp \
-        ICard.cpp \
-        ITransaction.cpp \
-        IUser.cpp \
-        LocalConfig.cpp \
-        PayrollProcessor.cpp \
-        SavingsAccount.cpp \
-        Storage.cpp \
-        DatabaseConnect.cpp \
-        TerminalConnector.cpp \
-        TransactionModel.cpp \
-        TransactionQueue.cpp \
-        TransactionQueueProcessor.cpp \
-        UserModel.cpp \
-        UserProxy.cpp \
-        acountlistview.cpp \
+        Account/AccountProxy.cpp \
+        Card/CardModel.cpp \
+        Card/CardProxy.cpp \
+        Account/CreditAccount.cpp \
+        Account/IAccount.cpp \
+        Card/ICard.cpp \
+        Transaction/ITransaction.cpp \
+        User/IUser.cpp \
+        Database/LocalConfig.cpp \
+        Processing/PayrollProcessor.cpp \
+        Account/SavingsAccount.cpp \
+        Database/Storage.cpp \
+        Database/DatabaseConnect.cpp \
+        Processing/TerminalConnector.cpp \
+        Transaction/TransactionModel.cpp \
+        Processing/TransactionQueue.cpp \
+        Processing/TransactionQueueProcessor.cpp \
+        User/UserModel.cpp \
+        User/UserProxy.cpp \
         main.cpp \
-        mainmenuview.cpp \
+        mainpageview.cpp \
         mainwindow.cpp \
+        manageaccountview.cpp \
         signinview.cpp
 
 HEADERS += \
-        AccountModel.h \
-        AccountPolicy.h \
-        AccountProxy.h \
-        CardModel.h \
-        CardProxy.h \
-        CreditAccount.h \
-        DatabaseConnect.h \
-        DebitAccount.h \
-        IAccount.h \
-        ICard.h \
-        ITransaction.h \
-        IUser.h \
-        LocalConfig.h \
-        PayrollAccount.h \
-        PayrollProcessor.h \
-        SavingsAccount.h \
-        Storage.h \
+        Account/AccountModel.h \
+        Account/AccountPolicy.h \
+        Account/AccountProxy.h \
+        Card/CardModel.h \
+        Card/CardProxy.h \
+        Account/CreditAccount.h \
+        Database/DatabaseConnect.h \
+        Account/DebitAccount.h \
+        Account/IAccount.h \
+        Card/ICard.h \
+        Transaction/ITransaction.h \
+        User/IUser.h \
+        Database/LocalConfig.h \
+        Account/PayrollAccount.h \
+        Processing/PayrollProcessor.h \
+        Account/SavingsAccount.h \
+        Database/Storage.h \
         StringUtils.h \
-        TerminalConnector.h \
-        TransactionModel.h \
-        TransactionQueue.h \
-        TransactionQueueProcessor.h \
-        UserModel.h \
-        UserProxy.h \
-        acountlistview.h \
-        mainmenuview.h \
+        Processing/TerminalConnector.h \
+        Transaction/TransactionModel.h \
+        Processing/TransactionQueue.h \
+        Processing/TransactionQueueProcessor.h \
+        User/UserModel.h \
+        User/UserProxy.h \
+        mainpageview.h \
         mainwindow.h \
+        manageaccountview.h \
         signinview.h
 
 FORMS += \
-        acountlistview.ui \
-        mainmenuview.ui \
+        mainpageview.ui \
         mainwindow.ui \
+        manageaccountview.ui \
         signinview.ui
 
 # Default rules for deployment.

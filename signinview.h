@@ -1,28 +1,35 @@
 #pragma once
+
 #ifndef SIGNINVIEW_H
 #define SIGNINVIEW_H
 #include <QDialog>
-#include "mainmenuview.h"
-#include "acountlistview.h"
+
+#include "manageaccountview.h"
+#include "mainpageview.h"
+
 class IUser;
-namespace Ui {
-class signinview;
+
+namespace Ui
+{
+    class SignInView;
 }
 
-class signinview : public QDialog
+class SignInView : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit signinview(QWidget *parent = nullptr);
-    ~signinview();
+    explicit SignInView(QWidget *parent = nullptr);
+    ~SignInView();
+
 private slots:
-        void on_signIn_B_clicked();
+    void on_signIn_B_clicked();
+
 private:
-    Ui::signinview *ui;
+    Ui::SignInView *ui;
     bool isCorrectCredentials(const std::string&, const std::string&);
-    MainMenuView *mainMenu;
-    acountlistview * acountList;
+    ManageAccountView *mainMenu;
+    MainPageView * acountList;
     IUser *user;
 };
 
