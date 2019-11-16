@@ -17,9 +17,9 @@ void Storage::init()
 {
     qDebug() << "Database loading";
     std::vector<IUser*> models = DatabaseConnect::getInstance().getUsers();
-    UserProxy* admin = new UserProxy(*new UserModel("Admin", "Admin", "admin", "admin"));
-    _users.push_back(admin);
-    admin->addAccount(new PayrollAccount(admin, 0, QDate::currentDate(), QDate::currentDate(), 0, 0));
+    //UserProxy* admin = new UserProxy(*new UserModel("Admin", "Admin", "admin", "admin"));
+    //_users.push_back(admin);
+    //admin->addAccount(new PayrollAccount(admin, 0, QDate::currentDate(), QDate::currentDate(), 0, 0));
 
     for (IUser* user : models)
     {

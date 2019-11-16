@@ -9,6 +9,7 @@
 #include <Account/DebitAccount.h>
 #include <Account/CreditAccount.h>
 #include <Account/SavingsAccount.h>
+#include <Account/PayrollAccount.h>
 #include <User/UserModel.h>
 #include <Card/CardModel.h>
 #include <Transaction/TransactionModel.h>
@@ -46,7 +47,7 @@ DatabaseConnect::DatabaseConnect()
 
         (_qrGetUsers=new QSqlQuery(_db))->prepare("SELECT login, first_name, last_name, password FROM users");
         (_qrGetUserAccounts = new QSqlQuery(_db))->prepare("SELECT id, balance, account_number, creation_date, payroll_date, credit_limit FROM accounts WHERE user_login = :user_login");
-        (_qrGetAccountCards = new QSqlQuery(_db))->prepare("SELECT id, pin, year, month FROM cards WHERE id_account = :account_id");
+        (_qrGetAccountCards = new QSqlQuery(_db))->prepare("SELECT card_id, pin, year, month FROM cards WHERE id_account = :account_id");
         (_qrGetAccountTransactions = new QSqlQuery(_db))->prepare("SELECT id, time_sent, time_recieved, amount, account_to, account_from, success FROM transactions WHERE (account_to = :account_id OR account_from = :account_id)");
     }
 }
@@ -96,14 +97,16 @@ void DatabaseConnect::addUser(const IUser* user)
 
 void DatabaseConnect::addTransaction(const ITransaction* trans)
 {
-    _qrAddTransaction->bindValue(":id",static_cast<unsigned int>(trans->getId()));
+    _qrAddTransaction->bindValue(":id", static_cast<unsigned int>(trans->getId()));
     _qrAddTransaction->bindValue(":time_sent",trans->getTimeSent());
-    _qrAddTransaction->bindValue(":time_recieved",trans->getTimeRecieved());
+    _qrAddTransaction->bindValue(":time_received",trans->getTimeRecieved());
     _qrAddTransaction->bindValue(":amount",trans->getAmount());
     _qrAddTransaction->bindValue(":account_from",static_cast<unsigned int>(trans->getSender().id()));
     _qrAddTransaction->bindValue(":account_to",static_cast<unsigned int>(trans->getReciever().id()));
+    qDebug() << trans->getSender().id();
     _qrAddTransaction->bindValue(":success",trans->getSuccess());
     _qrAddTransaction->exec();
+    qDebug() << _qrAddTransaction->numRowsAffected();
     // qDebug() << _qrAddTransaction->lastError();
 }
 
@@ -212,6 +215,9 @@ std::vector<IAccount*> DatabaseConnect::getUserAccounts(const IUser* user)
             case 2:
                 res.push_back(new SavingsAccount(user, balance, creation_date, payroll_date, creditLimit, id));
             break;
+            case 4:
+                res.push_back(new PayrollAccount(user, balance, creation_date, payroll_date, creditLimit, id));
+            break;
             default:
                 throw "Invalid account type";
         }
@@ -224,6 +230,7 @@ std::vector<ICard*> DatabaseConnect::getAccountCards(const IAccount* account)
 {
     _qrGetAccountCards->bindValue(":account_id", static_cast<unsigned int>(account->id()));
     _qrGetAccountCards->exec();
+    //qDebug() << _qrGetAccountCards->lastError();
     std::vector<ICard*> res;
     while(_qrGetAccountCards->next())
     {

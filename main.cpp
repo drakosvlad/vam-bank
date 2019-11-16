@@ -5,6 +5,7 @@
 #include "Database/Storage.h"
 #include "Processing/TransactionQueueProcessor.h"
 #include "Processing/PayrollProcessor.h"
+#include "Processing/TerminalConnector.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,6 +20,9 @@ int main(int argc, char *argv[])
     PayrollProcessor pp;
     pp.start();
 
+    TerminalConnector tc("/dev/cu.HC-06-SPPDev", *Storage::getInstance().getAccount(5));
+    tc.start();
+
     w.show();
     auto code = a.exec();
 
@@ -28,6 +32,9 @@ int main(int argc, char *argv[])
 
     pp.stopProcessing();
     pp.wait();
+
+    tc.stopProcessing();
+    tc.wait();
 
     return code;
 }

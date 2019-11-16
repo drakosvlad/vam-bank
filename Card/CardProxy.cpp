@@ -1,5 +1,6 @@
 #include "CardProxy.h"
 #include <Database/Storage.h>
+#include <Account/AccountProxy.h>
 
 void CardProxy::changePin(const std::array<unsigned char, 4> &pin)
 {
@@ -19,7 +20,7 @@ const std::array<unsigned char, 7> CardProxy::getCardId() const
 
 const IAccount* CardProxy::getAccount() const
 {
-    return _model.getAccount();
+    return new AccountProxy(const_cast<IAccount*>(_model.getAccount()));
 }
 
 const DueDate CardProxy::getDueDate() const

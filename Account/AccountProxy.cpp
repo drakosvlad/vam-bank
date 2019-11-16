@@ -62,9 +62,10 @@ const ICard* AccountProxy::getCard(const std::array<unsigned char, 7> &id) const
 
 ICard* AccountProxy::getCard(const std::array<unsigned char, 7> &id)
 {
-    auto card = new CardProxy(*dynamic_cast<CardModel*>(_model->getCard(id)));
-    if (card !=nullptr)
+    auto cardPtr = _model->getCard(id);
+    if (cardPtr != nullptr)
     {
+        auto card = new CardProxy(*dynamic_cast<CardModel*>(cardPtr));
         _toDeleteCards.push_back(card);
         return _toDeleteCards.back();
     }

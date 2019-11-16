@@ -25,6 +25,7 @@ CONFIG += c++11
 
 SOURCES += \
         Account/AccountProxy.cpp \
+        Account/PayrollAccount.cpp \
         Card/CardModel.cpp \
         Card/CardProxy.cpp \
         Account/CreditAccount.cpp \
