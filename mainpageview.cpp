@@ -32,6 +32,11 @@ void MainPageView::refreshAccountsList()
     for (std::vector<IAccount*>::iterator itor = accounts.begin(); itor != accounts.end(); ++itor)
     {
         ui->acountList_CB->addItem((*itor)->getAccountName()+ " - " + QString::number((*itor)->balance() / 100) + "UAH");
+        ui->acountList_CB->addItem(QString::number((*itor)->id())+" -  " +(*itor)->getAccountName() );
+    }
+    for (std::vector<IAccount*>::iterator itor = accounts.begin(); itor != accounts.end(); ++itor)
+    {
+        ui->accountsList_List->addItem((*itor)->getAccountName()+ ": " +  QString::number((*itor)->id()) + " - " + QString::number((*itor)->balance()/100) + "UAH");
     }
 }
 

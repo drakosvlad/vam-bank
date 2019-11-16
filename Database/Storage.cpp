@@ -11,7 +11,6 @@ Storage* Storage::_instance = nullptr;
 
 Storage::Storage()
 {
-
 }
 
 void Storage::init()
