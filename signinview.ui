@@ -27,7 +27,8 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>12</pointsize>
+     <family>Agency FB</family>
+     <pointsize>18</pointsize>
     </font>
    </property>
    <property name="title">
@@ -114,7 +115,8 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <family>Agency FB</family>
+      <pointsize>14</pointsize>
      </font>
     </property>
     <property name="styleSheet">
@@ -137,6 +139,12 @@ QPushButton:hover{
       <width>281</width>
       <height>21</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Agency FB</family>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Input your credentials, please:</string>
@@ -171,6 +179,12 @@ QPushButton:hover{
        </property>
        <item>
         <widget class="QLabel" name="username_L">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Username</string>
          </property>
@@ -204,6 +218,12 @@ QPushButton:hover{
        </property>
        <item>
         <widget class="QLabel" name="password_L2">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Password </string>
          </property>

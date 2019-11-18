@@ -31,9 +31,9 @@ SOURCES += \
         Account/CreditAccount.cpp \
         Account/IAccount.cpp \
         Card/ICard.cpp \
+    Database/LocalConfig.cpp \
         Transaction/ITransaction.cpp \
         User/IUser.cpp \
-        Database/LocalConfig.cpp \
         Processing/PayrollProcessor.cpp \
         Account/SavingsAccount.cpp \
         Database/Storage.cpp \

@@ -5,7 +5,7 @@
 /**
  * @brief Class representing bank card
  */
-class CardModel : public ICard
+class CardModel final: public ICard
 {
 private:
     std::array<unsigned char, 7> _cardId;

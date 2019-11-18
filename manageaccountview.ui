@@ -194,6 +194,12 @@
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
+    <property name="font">
+     <font>
+      <family>Agency FB</family>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -218,6 +224,12 @@ QPushButton:hover{
       <height>31</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Agency FB</family>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
     <property name="styleSheet">
      <string notr="true">QPushButton
 {	border:2px solid #00bfff;
@@ -239,6 +251,12 @@ QPushButton:hover{
       <height>21</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Agency FB</family>
+      <pointsize>21</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>Balance:</string>
     </property>
@@ -251,6 +269,12 @@ QPushButton:hover{
       <width>91</width>
       <height>21</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Agency FB</family>
+      <pointsize>17</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Account id:</string>
@@ -374,6 +398,12 @@ QPushButton:hover{
       <height>31</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Agency FB</family>
+      <pointsize>18</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>Input recipient`s account: </string>
     </property>
@@ -386,6 +416,12 @@ QPushButton:hover{
       <width>71</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Agency FB</family>
+      <pointsize>18</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Amount:</string>
@@ -405,7 +441,8 @@ QPushButton:hover{
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <family>Agency FB</family>
+      <pointsize>18</pointsize>
      </font>
     </property>
     <property name="styleSheet">
@@ -520,6 +557,11 @@ QPushButton:hover{
      </disabled>
     </palette>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>19</pointsize>
+    </font>
+   </property>
    <property name="autoFillBackground">
     <bool>true</bool>
    </property>
@@ -537,6 +579,12 @@ QPushButton:hover{
       <width>71</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Agency FB</family>
+      <pointsize>18</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Amount:</string>
@@ -566,7 +614,8 @@ QPushButton:hover{
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <family>Agency FB</family>
+      <pointsize>20</pointsize>
      </font>
     </property>
     <property name="autoFillBackground">
@@ -615,13 +664,16 @@ QPushButton:hover{
     <property name="font">
      <font>
       <family>Agency FB</family>
-      <pointsize>12</pointsize>
+      <pointsize>20</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
     <property name="text">
      <string>Transaction history</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QListWidget" name="transactionList_List">

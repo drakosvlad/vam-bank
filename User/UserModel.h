@@ -9,7 +9,7 @@ class IAccount;
 /**
  * @brief Class representing bank User
  */
-class UserModel: public IUser
+class UserModel final: public IUser
 {
 private:
     std::string _firstName,_lastName, _password, _login;

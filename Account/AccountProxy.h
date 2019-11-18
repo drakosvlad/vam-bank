@@ -5,7 +5,7 @@
 /**
  * @brief Account proxy class
  */
-class AccountProxy : public IAccount {
+class AccountProxy final: public IAccount {
 private:
     IAccount* _model;
     mutable std::vector<ICard*> _toDeleteCards;

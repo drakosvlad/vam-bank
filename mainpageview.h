@@ -20,7 +20,6 @@ public:
     explicit MainPageView(SignInView &,IUser &, QWidget *parent = nullptr);
     ~MainPageView();
     void refreshAccountsList();
-
 private slots:
     void on_pushButton_clicked();
     void on_manageButton_clicked();

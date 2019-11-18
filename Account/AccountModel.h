@@ -13,7 +13,7 @@
  * Class representing bank account
  */
 template <typename Policy>
-class AccountModel : public IAccount 
+class AccountModel final: public IAccount
 {
 private:
     const IUser& _owner;

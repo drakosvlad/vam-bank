@@ -20,8 +20,8 @@ int main(int argc, char *argv[])
     PayrollProcessor pp;
     pp.start();
 
-    TerminalConnector tc("/dev/cu.HC-06-SPPDev", *Storage::getInstance().getAccount(5));
-    tc.start();
+    //TerminalConnector tc("/dev/cu.HC-06-SPPDev", *Storage::getInstance().getAccount(5));
+    //tc.start();
 
     w.show();
     auto code = a.exec();
@@ -33,8 +33,8 @@ int main(int argc, char *argv[])
     pp.stopProcessing();
     pp.wait();
 
-    tc.stopProcessing();
-    tc.wait();
+    //tc.stopProcessing();
+    //tc.wait();
 
     return code;
 }

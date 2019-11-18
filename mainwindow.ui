@@ -146,8 +146,12 @@ QPushButton:hover
      </property>
      <property name="font">
       <font>
-       <pointsize>14</pointsize>
+       <family>Agency FB</family>
+       <pointsize>30</pointsize>
       </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
      </property>
      <property name="text">
       <string>Dear Guest!</string>
@@ -168,7 +172,7 @@ QPushButton:hover
      <property name="font">
       <font>
        <family>Agency FB</family>
-       <pointsize>14</pointsize>
+       <pointsize>21</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>

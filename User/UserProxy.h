@@ -8,7 +8,7 @@ class UserModel;
 /**
  * @brief Proxy class for User model
  */
-class UserProxy: public IUser
+class UserProxy final: public IUser
 {
 private:
     UserModel& _userModel;

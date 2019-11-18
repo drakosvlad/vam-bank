@@ -5,7 +5,7 @@
 /**
  * @brief The proxy class
  */
-class CardProxy : public ICard
+class CardProxy final: public ICard
 {
 private:
     CardModel& _model;

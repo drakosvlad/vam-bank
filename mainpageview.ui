@@ -115,7 +115,7 @@
     <property name="font">
      <font>
       <family>Agency FB</family>
-      <pointsize>14</pointsize>
+      <pointsize>18</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -197,6 +197,12 @@
       </disabled>
      </palette>
     </property>
+    <property name="font">
+     <font>
+      <family>Agency FB</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
    </widget>
    <widget class="QPushButton" name="manageButton">
     <property name="geometry">
@@ -209,7 +215,8 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <family>Agency FB</family>
+      <pointsize>18</pointsize>
      </font>
     </property>
     <property name="styleSheet">
@@ -236,7 +243,8 @@ QPushButton:hover{
    </property>
    <property name="font">
     <font>
-     <pointsize>12</pointsize>
+     <family>Agency FB</family>
+     <pointsize>16</pointsize>
     </font>
    </property>
    <property name="styleSheet">
@@ -354,9 +362,9 @@ QPushButton:hover{
    <property name="font">
     <font>
      <family>Agency FB</family>
-     <pointsize>10</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
+     <pointsize>18</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
     </font>
    </property>
    <property name="autoFillBackground">
@@ -380,9 +388,9 @@ QPushButton:hover{
     <property name="font">
      <font>
       <family>Agency FB</family>
-      <pointsize>10</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
+      <pointsize>16</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="text">
@@ -411,6 +419,12 @@ QPushButton:hover{
       <height>16</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Agency FB</family>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>Surname:</string>
     </property>
@@ -431,14 +445,23 @@ QPushButton:hover{
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>15</x>
       <y>90</y>
-      <width>56</width>
-      <height>16</height>
+      <width>191</width>
+      <height>20</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Agency FB</family>
+      <pointsize>18</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Accounts</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QListWidget" name="accountsList_List">
@@ -533,6 +556,12 @@ QPushButton:hover{
      <height>171</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Agency FB</family>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
    <property name="styleSheet">
     <string notr="true">QGroupBox {
  border: 1px solid back;
@@ -551,6 +580,12 @@ QPushButton:hover{
       <height>31</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Agency FB</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
    </widget>
    <widget class="QPushButton" name="addAccount_B">
     <property name="geometry">
@@ -560,6 +595,12 @@ QPushButton:hover{
       <width>93</width>
       <height>28</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Agency FB</family>
+      <pointsize>18</pointsize>
+     </font>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton

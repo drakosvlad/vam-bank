@@ -26,6 +26,7 @@ private slots:
     void on_signOut_B_clicked();
     void on_refreshButton_B_clicked();
 
+
 private:
     Ui::ManageAccountView *ui;
     bool isCorrectRecipientsCard(const std::string&);
