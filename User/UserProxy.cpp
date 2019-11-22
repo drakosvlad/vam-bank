@@ -20,36 +20,36 @@ UserProxy::~UserProxy()
     _toDeleteAccounts.clear();
 }
 
-bool UserProxy::verifyPassword(const std::string &password) const
+bool UserProxy::do_verifyPassword(const std::string &password) const
 {
     return _userModel.verifyPassword(password);
 }
 
-const std::string& UserProxy::getFirstName() const
+const std::string& UserProxy::do_getFirstName() const
 {
     return _userModel.getFirstName();
 }
 
-const std::string& UserProxy::getLastName() const
+const std::string& UserProxy::do_getLastName() const
 {
     return _userModel.getLastName();
 }
 
-const std::string& UserProxy::getLogin() const
+const std::string& UserProxy::do_getLogin() const
 {
     return _userModel.getLogin();
 }
-const std::string& UserProxy::getPassword() const
+const std::string& UserProxy::do_getPassword() const
 {
     return _userModel.getPassword();
 }
 
-const IAccount* UserProxy::getAccount(const size_t id) const
+const IAccount* UserProxy::do_getAccount(const size_t id) const
 {
     return const_cast<IAccount*>(const_cast<const UserProxy*>(this)->getAccount(id));
 }
 
-IAccount* UserProxy::getAccount(const size_t id)
+IAccount* UserProxy::do_getAccount(const size_t id)
 {
     auto account = _userModel.getAccount(id);
     if (account!=nullptr){
@@ -59,43 +59,43 @@ IAccount* UserProxy::getAccount(const size_t id)
     return nullptr;
 }
 
-void UserProxy::setFirstName(const std::string &name)
+void UserProxy::do_setFirstName(const std::string &name)
 {
     _userModel.setFirstName(name);
     Storage::getInstance().commitUser(this);
 }
 
-void UserProxy::setLastName(const std::string &name)
+void UserProxy::do_setLastName(const std::string &name)
 {
     _userModel.setLastName(name);
     Storage::getInstance().commitUser(this);
 }
 
-void UserProxy::setPassword(const std::string &password)
+void UserProxy::do_setPassword(const std::string &password)
 {
     _userModel.setPassword(password);
     Storage::getInstance().commitUser(this);
 }
 
-void UserProxy::setLogin(const std::string &login)
+void UserProxy::do_setLogin(const std::string &login)
 {
     _userModel.setLogin(login);
     Storage::getInstance().commitUser(this);
 }
 
-void UserProxy::addAccount(IAccount *account)
+void UserProxy::do_addAccount(IAccount *account)
 {
     _userModel.addAccount(account);
     DatabaseConnect::getInstance().addAccount(account);
 }
 
-void UserProxy::removeAccount(const IAccount* account)
+void UserProxy::do_removeAccount(const IAccount* account)
 {
     _userModel.removeAccount(account);
     DatabaseConnect::getInstance().removeAccount(account->id());
 }
 
-const std::vector<IAccount*> UserProxy::accounts()
+const std::vector<IAccount*> UserProxy::do_accounts()
 {
     std::vector<IAccount*> proxyAccounts;
     std::vector<IAccount*> modelAccounts = _userModel.accounts();

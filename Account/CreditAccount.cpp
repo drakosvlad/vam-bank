@@ -1,7 +1,7 @@
 #include "CreditAccount.h"
 
 template<>
-int AccountModel<CreditAccountPolicy>::payroll()
+int AccountModel<CreditAccountPolicy>::do_payroll()
 {
     _payrollDate = QDate::currentDate();
     if (_balance < _creditLimit)

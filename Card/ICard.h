@@ -18,13 +18,20 @@ struct DueDate
  */
 class ICard
 {
+private:
+    virtual void do_changePin(const std::array<unsigned char, 4> &) = 0;
+    virtual const std::array<unsigned char, 4> & do_pin() const = 0;
+    virtual bool do_verifyPin(const std::array<unsigned char, 4> &) const = 0;
+    virtual const std::array<unsigned char, 7> do_getCardId() const = 0;
+    virtual const IAccount* do_getAccount() const = 0;
+    virtual const DueDate do_getDueDate() const = 0;
 public:
     virtual ~ICard();
-    virtual void changePin(const std::array<unsigned char, 4> &) = 0;
-    virtual const std::array<unsigned char, 4> & pin() const = 0;
-    virtual bool verifyPin(const std::array<unsigned char, 4> &) const = 0;
+    void changePin(const std::array<unsigned char, 4> &);
+    const std::array<unsigned char, 4> & pin() const;
+    bool verifyPin(const std::array<unsigned char, 4> &) const;
     // Array containing 7 bytes
-    virtual const std::array<unsigned char, 7> getCardId() const = 0;
-    virtual const IAccount* getAccount() const = 0;
-    virtual const DueDate getDueDate() const = 0;
+    const std::array<unsigned char, 7> getCardId() const;
+    const IAccount* getAccount() const;
+    const DueDate getDueDate() const;
 };

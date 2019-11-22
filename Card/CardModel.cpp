@@ -19,32 +19,32 @@ CardModel::~CardModel()
 
 }
 
-void CardModel::changePin(const std::array<unsigned char, 4> &pin)
+void CardModel::do_changePin(const std::array<unsigned char, 4> &pin)
 {
     _pin = pin;
 }
 
-bool CardModel::verifyPin(const std::array<unsigned char, 4> &pin) const
+bool CardModel::do_verifyPin(const std::array<unsigned char, 4> &pin) const
 {
     return _pin == pin;
 }
 
-const std::array<unsigned char,7> CardModel::getCardId() const
+const std::array<unsigned char,7> CardModel::do_getCardId() const
 {
     return _cardId;
 }
 
-const IAccount* CardModel::getAccount() const
+const IAccount* CardModel::do_getAccount() const
 {
     return &_boundAccount;
 }
 
-const DueDate CardModel::getDueDate() const
+const DueDate CardModel::do_getDueDate() const
 {
     return _dueDate;
 }
 
-const std::array<unsigned char, 4> & CardModel::pin() const
+const std::array<unsigned char, 4> & CardModel::do_pin() const
 {
     return _pin;
 }

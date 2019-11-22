@@ -18,49 +18,49 @@ AccountProxy::~AccountProxy()
     _toDeleteCards.clear();
 }
 
-void AccountProxy::acceptTransfer (const int amount)
+void AccountProxy::do_acceptTransfer (const int amount)
 {
     _model->acceptTransfer(amount);
     Storage::getInstance().commitAccount(_model);
 }
 
-void AccountProxy::transfer(IAccount& acc, const int amount)
+void AccountProxy::do_transfer(IAccount& acc, const int amount)
 {
     this->_model->transfer(acc, amount);
     Storage::getInstance().commitAccount(_model);
     Storage::getInstance().commitAccount(&acc);
 }
 
-int AccountProxy::balance() const
+int AccountProxy::do_balance() const
 {
     return _model->balance();
 }
 
-size_t AccountProxy::id() const
+size_t AccountProxy::do_id() const
 {
     return _model->id();
 }
 
-bool AccountProxy::isPaymentAccount() const
+bool AccountProxy::do_isPaymentAccount() const
 {
     return _model->isPaymentAccount();
 }
-short AccountProxy::accountType() const
+short AccountProxy::do_accountType() const
 {
     return _model->accountType();
 }
 
-void AccountProxy::addCard(ICard* card)
+void AccountProxy::do_addCard(ICard* card)
 {
     _model->addCard(card);
 }
 
-const ICard* AccountProxy::getCard(const std::array<unsigned char, 7> &id) const
+const ICard* AccountProxy::do_getCard(const std::array<unsigned char, 7> &id) const
 {
     return const_cast<ICard*>(const_cast<const AccountProxy*>(this)->getCard(id));
 }
 
-ICard* AccountProxy::getCard(const std::array<unsigned char, 7> &id)
+ICard* AccountProxy::do_getCard(const std::array<unsigned char, 7> &id)
 {
     auto cardPtr = _model->getCard(id);
     if (cardPtr != nullptr)
@@ -72,17 +72,17 @@ ICard* AccountProxy::getCard(const std::array<unsigned char, 7> &id)
     return nullptr;
 }
 
-const IUser* AccountProxy::getBoundUser() const
+const IUser* AccountProxy::do_getBoundUser() const
 {
     return _model->getBoundUser();
 };
-void AccountProxy::removeCard(const std::array<unsigned char, 7> &cardNum)
+void AccountProxy::do_removeCard(const std::array<unsigned char, 7> &cardNum)
 {
     _model->removeCard(cardNum);
     Storage::getInstance().commitAccount(_model);
 }
 
-const std::vector<ICard*> AccountProxy::cards() const
+const std::vector<ICard*> AccountProxy::do_cards() const
 {
     // Todo delete
     std::vector<ICard*> proxyCards;
@@ -96,42 +96,42 @@ const std::vector<ICard*> AccountProxy::cards() const
     return proxyCards;
 }
 
-const QString AccountProxy::getAccountName() const
+const QString AccountProxy::do_getAccountName() const
 {
     return _model->getAccountName();
 };
-const std::vector<const ITransaction*> AccountProxy::transactions() const
+const std::vector<const ITransaction*> AccountProxy::do_transactions() const
 {
     return _model->transactions();
 }
 
-void AccountProxy::addTransaction(const ITransaction *tr)
+void AccountProxy::do_addTransaction(const ITransaction *tr)
 {
     _model->addTransaction(tr);
     DatabaseConnect::getInstance().addTransaction(tr);
 }
 
-const ITransaction* AccountProxy::getTransaction(const size_t id) const
+const ITransaction* AccountProxy::do_getTransaction(const size_t id) const
 {
     return _model->getTransaction(id);
 }
 
-const QDate AccountProxy::creationDate() const
+const QDate AccountProxy::do_creationDate() const
 {
     return _model->creationDate();
 }
 
-const QDate AccountProxy::payrollDate() const
+const QDate AccountProxy::do_payrollDate() const
 {
     return _model->payrollDate();
 }
 
-int AccountProxy::creditLimit() const
+int AccountProxy::do_creditLimit() const
 {
     return _model->creditLimit();
 }
 
-int AccountProxy::payroll()
+int AccountProxy::do_payroll()
 {
     int fee = _model->payroll();
     Storage::getInstance().commitAccount(_model);
