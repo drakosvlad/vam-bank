@@ -22,6 +22,13 @@ private:
     const QDateTime _timeSent;
     const QDateTime _timeReceived;
 
+    const IAccount& do_getSender() const override;
+    const IAccount& do_getReciever() const override;
+    const QDateTime do_getTimeSent() const override;
+    const QDateTime do_getTimeRecieved() const override;
+    int do_getAmount() const override;
+    bool do_getSuccess() const override;
+    size_t do_getId() const override;
 public:
     TransactionModel(const size_t id,
                      const IAccount &from,
@@ -33,11 +40,5 @@ public:
     ~TransactionModel() override;
     TransactionModel(const TransactionModel &);
     TransactionModel& operator=(const TransactionModel &) = delete;
-    const IAccount& getSender() const override;
-    const IAccount& getReciever() const override;
-    const QDateTime getTimeSent() const override;
-    const QDateTime getTimeRecieved() const override;
-    int getAmount() const override;
-    bool getSuccess() const override;
-    size_t getId() const override;
+
 };

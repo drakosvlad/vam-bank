@@ -12,62 +12,62 @@ UserModel::UserModel(const std::string& firstName,
 
 UserModel::~UserModel(){}
 
-const std::string& UserModel::getFirstName() const
+const std::string& UserModel::do_getFirstName() const
 {
     return _firstName;
 };
 
-const std::string& UserModel::getLastName() const
+const std::string& UserModel::do_getLastName() const
 {
     return _lastName;
 };
 
-const std::string& UserModel::getLogin() const
+const std::string& UserModel::do_getLogin() const
 {
     return _login;
 };
 
-const std::string& UserModel::getPassword() const
+const std::string& UserModel::do_getPassword() const
 {
     return _password;
 };
 
-void UserModel::setFirstName(const std::string& firstName)
+void UserModel::do_setFirstName(const std::string& firstName)
 {
     _firstName = firstName;
     return;
 };
 
-void UserModel::setLastName(const std::string& lastName)
+void UserModel::do_setLastName(const std::string& lastName)
 {
     _lastName = lastName;
     return;
 };
 
-void UserModel::setPassword(const std::string& password)
+void UserModel::do_setPassword(const std::string& password)
 {
     _password = password;
     return;
 };
 
-void UserModel::setLogin(const std::string& login)
+void UserModel::do_setLogin(const std::string& login)
 {
     _login=login;
     return;
 };
 
-void UserModel::addAccount(IAccount* account)
+void UserModel::do_addAccount(IAccount* account)
 {
     _accounts.push_back(account);
     return;
 };
 
-const IAccount* UserModel::getAccount(const size_t id) const
+const IAccount* UserModel::do_getAccount(const size_t id) const
 {
     return const_cast<UserModel*>(this)->getAccount(id);
 };
 
-IAccount* UserModel::getAccount(const size_t id)
+IAccount* UserModel::do_getAccount(const size_t id)
 {
     for (std::vector<IAccount*>::iterator it = _accounts.begin(); it!=_accounts.end(); ++it){
         if ((*it)->id() == id)
@@ -76,7 +76,7 @@ IAccount* UserModel::getAccount(const size_t id)
     return nullptr;
 };
 
-void UserModel::removeAccount(const IAccount * account)
+void UserModel::do_removeAccount(const IAccount * account)
 {
     for (std::vector<IAccount*>::iterator it = _accounts.begin(); it!=_accounts.end(); ++it){
         if ((*it)->id() == account->id())
@@ -84,12 +84,12 @@ void UserModel::removeAccount(const IAccount * account)
     }
 };
 
-bool UserModel::verifyPassword(const std::string &password) const
+bool UserModel::do_verifyPassword(const std::string &password) const
 {
     return password == _password;
 }
 
-const std::vector<IAccount*> UserModel::accounts()
+const std::vector<IAccount*> UserModel::do_accounts()
 {
     return _accounts;
 }

@@ -14,32 +14,53 @@ class ITransaction;
  */
 class IAccount
 {
+private:
+    virtual void do_acceptTransfer(const int amount) = 0;
+    virtual void do_transfer(IAccount& acc, const int amount) = 0;
+    virtual int do_balance() const = 0;
+    virtual size_t do_id() const = 0;
+    virtual bool do_isPaymentAccount() const = 0;
+    virtual short do_accountType() const =0;
+    virtual void do_addCard(ICard* card) = 0;
+    virtual const IUser* do_getBoundUser() const =0;
+    virtual const QString do_getAccountName() const = 0;
+    virtual ICard* do_getCard(const std::array<unsigned char, 7> & id) = 0;
+    virtual const ICard* do_getCard(const std::array<unsigned char, 7> & id) const = 0;
+    virtual void do_removeCard(const std::array<unsigned char, 7> & cardNum) = 0;
+    virtual const std::vector<ICard*> do_cards() const = 0;
+    virtual const std::vector<const ITransaction*> do_transactions() const = 0;
+    virtual void do_addTransaction(const ITransaction *) = 0;
+    virtual const ITransaction* do_getTransaction(const size_t id) const = 0;
+    virtual const QDate do_creationDate() const = 0;
+    virtual const QDate do_payrollDate() const = 0;
+    virtual int do_creditLimit() const = 0;
+
+    virtual int do_payroll() = 0;
 public:
     virtual ~IAccount();
     /**
      * Adds the amount of received money to the account, including the fee
-     */
-    virtual void acceptTransfer(const int amount) = 0;
-    virtual void transfer(IAccount& acc, const int amount) = 0;
-    virtual int balance() const = 0;
-    virtual size_t id() const = 0;
-    virtual bool isPaymentAccount() const = 0;
-    virtual short accountType() const =0;
-    virtual void addCard(ICard* card) = 0;
-    virtual const IUser* getBoundUser() const =0;
-    virtual const QString getAccountName() const = 0;
-    virtual ICard* getCard(const std::array<unsigned char, 7> & id) = 0;
-    virtual const ICard* getCard(const std::array<unsigned char, 7> & id) const = 0;
-    virtual void removeCard(const std::array<unsigned char, 7> & cardNum) = 0;
-    virtual const std::vector<ICard*> cards() const = 0;
-    virtual const std::vector<const ITransaction*> transactions() const = 0;
-    virtual void addTransaction(const ITransaction *) = 0;
-    virtual const ITransaction* getTransaction(const size_t id) const = 0;
-    virtual const QDate creationDate() const = 0;
-    virtual const QDate payrollDate() const = 0;
-    virtual int creditLimit() const = 0;
-
-    virtual int payroll() = 0;
+    */
+    void acceptTransfer(const int amount);
+    void transfer(IAccount& acc, const int amount);
+    int balance() const;
+    size_t id() const;
+    bool isPaymentAccount() const;
+    short accountType() const;
+    void addCard(ICard* card);
+    const IUser* getBoundUser() const;
+    const QString getAccountName() const;
+    ICard* getCard(const std::array<unsigned char, 7> & id);
+    const ICard* getCard(const std::array<unsigned char, 7> & id) const;
+    void removeCard(const std::array<unsigned char, 7> & cardNum);
+    const std::vector<ICard*> cards() const;
+    const std::vector<const ITransaction*> transactions() const;
+    void addTransaction(const ITransaction *);
+    const ITransaction* getTransaction(const size_t id) const;
+    const QDate creationDate() const;
+    const QDate payrollDate() const;
+    int creditLimit() const;
+    int payroll();
 };
 
 std::ostream& operator<<(std::ostream& out, const IAccount& account);

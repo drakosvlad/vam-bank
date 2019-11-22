@@ -9,13 +9,21 @@ class IAccount;
  */
 class ITransaction
 {
+private:
+    virtual const IAccount& do_getSender() const = 0;
+    virtual const IAccount& do_getReciever() const = 0;
+    virtual const QDateTime do_getTimeSent() const = 0;
+    virtual const QDateTime do_getTimeRecieved() const = 0;
+    virtual int do_getAmount() const = 0;
+    virtual bool do_getSuccess() const = 0;
+    virtual size_t do_getId() const = 0;
 public:
     virtual ~ITransaction();
-    virtual const IAccount& getSender() const = 0;
-    virtual const IAccount& getReciever() const = 0;
-    virtual const QDateTime getTimeSent() const = 0;
-    virtual const QDateTime getTimeRecieved() const = 0;
-    virtual int getAmount() const = 0;
-    virtual bool getSuccess() const = 0;
-    virtual size_t getId() const = 0;
+    const IAccount& getSender() const;
+    const IAccount& getReciever() const;
+    const QDateTime getTimeSent() const;
+    const QDateTime getTimeRecieved() const;
+    int getAmount() const;
+    bool getSuccess() const;
+    size_t getId() const;
 };

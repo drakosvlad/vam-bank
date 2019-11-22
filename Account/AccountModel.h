@@ -24,35 +24,33 @@ private:
     int _creditLimit;
     std::vector<ICard*> _cards;
     std::vector<const ITransaction*> _transactions;
+    void do_transfer(IAccount& acc, const int amount) override;
+    void do_acceptTransfer(const int amount) override;
+    int do_balance() const override { return this->_balance; }
+    size_t do_id() const override { return this->_id; }
+    const QString do_getAccountName() const override;
+    bool do_isPaymentAccount() const override { return Policy::_isPaymentAccount; }
+    short do_accountType() const override {return Policy::_accountType;}
+    void do_addCard(ICard* card) override;
 
+    ICard* do_getCard(const std::array<unsigned char, 7> & id) override;
+    const ICard* do_getCard(const std::array<unsigned char, 7> & id) const override;
+    const IUser* do_getBoundUser() const override {return &_owner;}
+    void do_removeCard(const std::array<unsigned char, 7> & cardNum) override;
+    const std::vector<ICard*> do_cards() const override;
+    const std::vector<const ITransaction*> do_transactions() const override;
+    void do_addTransaction(const ITransaction *) override;
+    const ITransaction* do_getTransaction(const size_t id) const override;
+    const QDate do_creationDate() const override;
+    const QDate do_payrollDate() const override;
+    int do_creditLimit() const override;
+
+    int do_payroll() override;
 public:
     AccountModel(const IUser* owner, const int balance, const QDate& creationDate, const QDate& payrollDate, int creditLimit, size_t id);
     ~AccountModel(){  }
     AccountModel(const AccountModel & am) = delete;
     AccountModel& operator=(const AccountModel & am) = delete;
-
-    void transfer(IAccount& acc, const int amount) override;
-    void acceptTransfer(const int amount) override;
-    int balance() const override { return this->_balance; }
-    size_t id() const override { return this->_id; }
-    const QString getAccountName() const override;
-    bool isPaymentAccount() const override { return Policy::_isPaymentAccount; }
-    short accountType() const override {return Policy::_accountType;}
-    void addCard(ICard* card) override;
-
-    ICard* getCard(const std::array<unsigned char, 7> & id) override;
-    const ICard* getCard(const std::array<unsigned char, 7> & id) const override;
-    const IUser* getBoundUser() const override {return &_owner;}
-    void removeCard(const std::array<unsigned char, 7> & cardNum) override;
-    const std::vector<ICard*> cards() const override;
-    const std::vector<const ITransaction*> transactions() const override;
-    void addTransaction(const ITransaction *) override;
-    const ITransaction* getTransaction(const size_t id) const override;
-    const QDate creationDate() const override;
-    const QDate payrollDate() const override;
-    int creditLimit() const override;
-
-    int payroll() override;
 };
 
 template <typename Policy>
@@ -60,14 +58,14 @@ AccountModel<Policy>::AccountModel(const IUser* owner, int balance, const QDate&
     : _owner(*owner),_balance(balance), _id(id), _creationDate(creationDate), _payrollDate(payrollDate), _creditLimit(creditLimit)  {  }
 
 template <typename Policy>
-void AccountModel<Policy>::acceptTransfer(const int amount)
+void AccountModel<Policy>::do_acceptTransfer(const int amount)
 {
     int actualAmount = amount - Policy::acceptFee(amount);
     this->_balance += actualAmount;
 }
 
 template <typename Policy>
-void AccountModel<Policy>::transfer(IAccount& acc, const int amount)
+void AccountModel<Policy>::do_transfer(IAccount& acc, const int amount)
 {
     if (amount <= 0)
         throw TransferError("Invalid transfer amount");
@@ -87,13 +85,13 @@ void AccountModel<Policy>::transfer(IAccount& acc, const int amount)
 }
 
 template <typename Policy>
-void AccountModel<Policy>::addCard(ICard* card)
+void AccountModel<Policy>::do_addCard(ICard* card)
 {
     this->_cards.push_back(card);
 }
 
 template <typename Policy>
-const QString AccountModel<Policy>::getAccountName() const
+const QString AccountModel<Policy>::do_getAccountName() const
 {
     QString tpl = QString("%1 (%2)").arg(QString::number(_id));
     switch (accountType()) {
@@ -113,7 +111,7 @@ const QString AccountModel<Policy>::getAccountName() const
 }
 
 template <typename Policy>
-ICard* AccountModel<Policy>::getCard(const std::array<unsigned char, 7> & id)
+ICard* AccountModel<Policy>::do_getCard(const std::array<unsigned char, 7> & id)
 {
     for (std::vector<ICard*>::iterator itor = _cards.begin(); itor != _cards.end(); ++itor)
     {
@@ -124,13 +122,13 @@ ICard* AccountModel<Policy>::getCard(const std::array<unsigned char, 7> & id)
 }
 
 template <typename Policy>
-const ICard* AccountModel<Policy>::getCard(const std::array<unsigned char, 7> & id) const
+const ICard* AccountModel<Policy>::do_getCard(const std::array<unsigned char, 7> & id) const
 {
     return const_cast<AccountModel<Policy>*>(this)->getCard(id);
 }
 
 template <typename Policy>
-void AccountModel<Policy>::removeCard(const std::array<unsigned char, 7> & cardNum)
+void AccountModel<Policy>::do_removeCard(const std::array<unsigned char, 7> & cardNum)
 {
     for (std::vector<ICard*>::iterator itor = _cards.begin(); itor != _cards.end(); ++itor)
     {
@@ -143,19 +141,19 @@ void AccountModel<Policy>::removeCard(const std::array<unsigned char, 7> & cardN
 }
 
 template <typename Policy>
-const std::vector<ICard*> AccountModel<Policy>::cards() const
+const std::vector<ICard*> AccountModel<Policy>::do_cards() const
 {
     return _cards;
 }
 
 template <typename Policy>
-const std::vector<const ITransaction*> AccountModel<Policy>::transactions() const
+const std::vector<const ITransaction*> AccountModel<Policy>::do_transactions() const
 {
     return _transactions;
 }
 
 template <typename Policy>
-const ITransaction* AccountModel<Policy>::getTransaction(const size_t id) const
+const ITransaction* AccountModel<Policy>::do_getTransaction(const size_t id) const
 {
     for (std::vector<const ITransaction*>::const_iterator itor = _transactions.begin(); itor != _transactions.end(); ++itor)
     {
@@ -169,31 +167,31 @@ const ITransaction* AccountModel<Policy>::getTransaction(const size_t id) const
 }
 
 template <typename Policy>
-void AccountModel<Policy>::addTransaction(const ITransaction *tr)
+void AccountModel<Policy>::do_addTransaction(const ITransaction *tr)
 {
     _transactions.push_back(tr);
 }
 
 template <typename Policy>
-const QDate AccountModel<Policy>::creationDate() const
+const QDate AccountModel<Policy>::do_creationDate() const
 {
     return _creationDate;
 }
 
 template <typename Policy>
-const QDate AccountModel<Policy>::payrollDate() const
+const QDate AccountModel<Policy>::do_payrollDate() const
 {
     return _payrollDate;
 }
 
 template <typename Policy>
-int AccountModel<Policy>::creditLimit() const
+int AccountModel<Policy>::do_creditLimit() const
 {
     return _creditLimit;
 }
 
 template <typename Policy>
-int AccountModel<Policy>::payroll()
+int AccountModel<Policy>::do_payroll()
 {
     return 0;
 }

@@ -35,37 +35,37 @@ TransactionModel::TransactionModel(const TransactionModel& m)
 
 }
 
-const IAccount& TransactionModel::getSender() const
+const IAccount& TransactionModel::do_getSender() const
 {
     return _from;
 }
 
-const IAccount& TransactionModel::getReciever() const
+const IAccount& TransactionModel::do_getReciever() const
 {
     return _to;
 }
 
-const QDateTime TransactionModel::getTimeSent() const
+const QDateTime TransactionModel::do_getTimeSent() const
 {
     return _timeSent;
 }
 
-const QDateTime TransactionModel::getTimeRecieved() const
+const QDateTime TransactionModel::do_getTimeRecieved() const
 {
     return _timeReceived;
 }
 
-int TransactionModel::getAmount() const
+int TransactionModel::do_getAmount() const
 {
     return _amount;
 }
 
-bool TransactionModel::getSuccess() const
+bool TransactionModel::do_getSuccess() const
 {
     return _success;
 }
 
-size_t TransactionModel::getId() const
+size_t TransactionModel::do_getId() const
 {
     return _id;
 }
